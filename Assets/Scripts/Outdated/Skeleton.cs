@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton : MonoBehaviour {
+public class Skeletonn : MonoBehaviour {
 	private GameObject player;
 	private Vector3 movDirection;
 
