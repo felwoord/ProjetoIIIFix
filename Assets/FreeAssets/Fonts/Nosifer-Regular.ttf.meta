@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 4c47982e985b256489083159916031c2
+timeCreated: 1507768745
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Nosifer
+  fontNames:
+  - Nosifer
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: dcdaca38d111028499c7756e10510d87, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

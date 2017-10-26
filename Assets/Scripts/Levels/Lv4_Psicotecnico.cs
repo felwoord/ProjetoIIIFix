@@ -14,7 +14,10 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 	private bool apagaTexto = false;
 	private bool finishedText;
 
+	private bool doOnce = false;
+
 	private float count = 0;
+	private float count2 = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -28,22 +31,38 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 			SceneManager.LoadScene ("Menu");
 		}
 
-		count++;
-		if (count < 5){
+		count += Time.deltaTime;
+		if (count < 15){
 			ShowText ("Esses são os supervisores gerais e… Mais alguns atrasados. Quê? O trânsito aqui é… Hhhhahahhah um inferno~");
 		}
-		if (count > 5 && count < 7) {
-			//desativar caixa de texto (mesh)
-			//spawnar inimigos (uma vez)
+		if (count > 15 && count < 17) {
+			if (!doOnce) {
+				apagaTexto = true;
+				finishedText = false;
+				gameObject.GetComponent<MeshRenderer> ().enabled = false;
+				SpawnEnemies ();
+				doOnce = true;
+			}
 
-		}if (count > 7) {
-			//checkar se todos foram mortos
-			//se todos foram mortos, ativar caixa de texto e mostrar texto
-			//Aaaaaargh. Ok, vamos fazer uma seletiva final pra decidir logo com quem vamos ficar, antes que você mate o departamento inteiro.
-			//salvar que fase foi completada
-			//load proxima fase
+		}if (count > 17) {
+			int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+			if (enemyCount == 0) {
+				gameObject.GetComponent<MeshRenderer> ().enabled = true;
+				ShowText ("Aaaaaargh. Ok, vamos fazer uma seletiva final pra decidir logo com quem vamos ficar, antes que você mate o departamento inteiro.");
+				count2 += Time.deltaTime;
+				if (count2 > 5) {
+					PlayerPrefs.SetInt ("5SFopen", 1);
+					PlayerPrefs.Save ();
+					SceneManager.LoadScene ("5SF");
+				}
+			}
+
+		
 		}
 		
+	}
+
+	private void SpawnEnemies(){
 	}
 
 

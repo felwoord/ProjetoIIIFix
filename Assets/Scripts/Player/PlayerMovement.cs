@@ -96,6 +96,58 @@ public class PlayerMovement : MonoBehaviour {
 			slowedTime = !slowedTime;
 		}
 
+		Movement ();
+		Attack ();
+		Dash ();
+		AntiBugWall ();
+		EnergyBarInter ();
+
+
+	}
+
+	private void EnergyBarInter(){
+		if (energyBar.fillAmount < 1 && !airborne && !slowedTime) {
+			energyBar.fillAmount += Time.deltaTime / 10;
+		}
+		if (airborne) {
+			energyBar.fillAmount -= Time.deltaTime / 5;
+		}
+		if (energyBar.fillAmount <= 0.001f) {
+			airborne = false;
+			slowedTime = false;
+			rb.constraints = ~RigidbodyConstraints.FreezePosition;
+		}
+
+		if (slowedTime) {
+			energyBar.fillAmount -= Time.deltaTime / 20;
+			clock.enabled = true;
+		} else {
+			clock.enabled = false;
+		}
+	}
+
+	private void AntiBugWall(){
+		if (backWall.transform.position.z > cam.transform.position.z) {
+			backWall.GetComponent<MeshRenderer> ().enabled = false;
+		} else {
+			backWall.GetComponent<MeshRenderer> ().enabled = true;
+		}
+
+		if (transform.position.z < backWall.transform.position.z) {
+			transform.position = new Vector3 (transform.position.x, transform.position.y, backWall.transform.position.z + 3);
+		}
+		if (transform.position.z > frontWall.transform.position.z) {
+			transform.position = new Vector3 (transform.position.x, transform.position.y, frontWall.transform.position.z - 3);
+		}
+		if (transform.position.x < leftWall.transform.position.x) {
+			transform.position = new Vector3 (leftWall.transform.position.x + 3, transform.position.y, transform.position.z);
+		}
+		if (transform.position.x > rightWall.transform.position.x) {
+			transform.position = new Vector3 (rightWall.transform.position.x - 3, transform.position.y, transform.position.z);
+		}
+	}
+
+	private void Movement(){
 		movDirection = new Vector3 (InputArcade.Eixo (0, EEixo.HORIZONTAL) * range, 0, InputArcade.Eixo (0, EEixo.VERTICAL) * range);
 
 		rb.AddForce (movDirection * movSpeed * Time.deltaTime * 1000);
@@ -104,45 +156,9 @@ public class PlayerMovement : MonoBehaviour {
 			playerDirection = movDirection.normalized;
 			transform.rotation = Quaternion.LookRotation (movDirection);
 		}
+	}
 
-		if (delayAttack) {
-			if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0) {
-				Jump ();
-			}
-			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0) {
-				if (energyBar.fillAmount >= 0.2f) {
-					ShotAttack ();
-				}
-			}
-			if (delayAA) {
-				if (InputArcade.Eixo (1, EEixo.HORIZONTAL) > 0) {
-					BasicAttack ();
-					delayAA = false;
-				}
-			}
-			if (InputArcade.Eixo (1, EEixo.VERTICAL) < 0) {
-				if (energyBar.fillAmount >= 0.35f) {
-					SpecialAttack ();
-				}
-			}
-			delayAttack = false;
-		}
-
-		if (!delayAA) {
-			countAA += Time.deltaTime;
-			if (countAA >= 0.5f) {
-				countAA = 0;
-				delayAA = true;
-			}
-		}
-
-		if (delayAttack == false) {
-			if (InputArcade.Eixo (1, EEixo.VERTICAL) == 0 && InputArcade.Eixo (1, EEixo.HORIZONTAL) == 0) {
-				delayAttack = true;
-			}
-
-		}
-
+	private void Dash(){
 		if (dash.fillAmount >= 1) {
 			// ||||||||||||||||||||||||||||||||||||||||| Dash Foward |||||||||||||||||||||||||||||||||||||||||
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) > 0 && firstButtonPressedF && firstButtonReleasedF) {
@@ -239,49 +255,52 @@ public class PlayerMovement : MonoBehaviour {
 			}
 		}
 
-		if (backWall.transform.position.z > cam.transform.position.z) {
-			backWall.GetComponent<MeshRenderer> ().enabled = false;
-		} else {
-			backWall.GetComponent<MeshRenderer> ().enabled = true;
-		}
-
-		if (transform.position.z < backWall.transform.position.z) {
-			transform.position = new Vector3 (transform.position.x, transform.position.y, backWall.transform.position.z + 3);
-		}
-		if (transform.position.z > frontWall.transform.position.z) {
-			transform.position = new Vector3 (transform.position.x, transform.position.y, frontWall.transform.position.z - 3);
-		}
-		if (transform.position.x < leftWall.transform.position.x) {
-			transform.position = new Vector3 (leftWall.transform.position.x + 3, transform.position.y, transform.position.z);
-		}
-		if (transform.position.x > rightWall.transform.position.x) {
-			transform.position = new Vector3 (rightWall.transform.position.x - 3, transform.position.y, transform.position.z);
-		}
-
 
 		if (dash.fillAmount < 1) {
 			dash.fillAmount += Time.deltaTime / 5;
 		}
-		if (energyBar.fillAmount < 1 && !airborne && !slowedTime) {
-			energyBar.fillAmount += Time.deltaTime / 10;
-		}
-		if (airborne) {
-			energyBar.fillAmount -= Time.deltaTime / 5;
-		}
-		if (energyBar.fillAmount <= 0.001f) {
-			airborne = false;
-			slowedTime = false;
-			rb.constraints = ~RigidbodyConstraints.FreezePosition;
+
+	}
+
+	private void Attack(){
+		if (delayAttack) {
+			if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0) {
+				Jump ();
+			}
+			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0) {
+				if (energyBar.fillAmount >= 0.2f) {
+					ShotAttack ();
+				}
+			}
+			if (delayAA) {
+				if (InputArcade.Eixo (1, EEixo.HORIZONTAL) > 0) {
+					BasicAttack ();
+					delayAA = false;
+				}
+			}
+			if (InputArcade.Eixo (1, EEixo.VERTICAL) < 0) {
+				if (energyBar.fillAmount >= 0.35f) {
+					SpecialAttack ();
+				}
+			}
+			delayAttack = false;
 		}
 
-		if (slowedTime) {
-			energyBar.fillAmount -= Time.deltaTime / 20;
-			clock.enabled = true;
-		} else {
-			clock.enabled = false;
+		if (!delayAA) {
+			countAA += Time.deltaTime;
+			if (countAA >= 0.5f) {
+				countAA = 0;
+				delayAA = true;
+			}
+		}
+
+		if (delayAttack == false) {
+			if (InputArcade.Eixo (1, EEixo.VERTICAL) == 0 && InputArcade.Eixo (1, EEixo.HORIZONTAL) == 0) {
+				delayAttack = true;
+			}
+
 		}
 	}
-	
 
 	private void Jump(){
 		if (isGrounded) {
@@ -388,9 +407,11 @@ public class PlayerMovement : MonoBehaviour {
 	public bool GetIsGrounded(){
 		return isGrounded;
 	}
+
 	public bool GetAirborne(){
 		return airborne;
 	}
+
 	public void AddEnergy(){
 		if (!slowedTime) {
 			energyBar.fillAmount += 0.1f;
@@ -398,7 +419,9 @@ public class PlayerMovement : MonoBehaviour {
 			energyBar.fillAmount += 0.01f;
 		}
 	}
+
 	public bool GetSlowedTime(){
 		return slowedTime;
 	}
+
 }

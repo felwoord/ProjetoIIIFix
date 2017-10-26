@@ -66,6 +66,8 @@ public class MainMenu : MonoBehaviour {
 		sFButton = sF.GetComponent<Button> ();
 		sTButton = sT.GetComponent<Button> ();
 
+		dIButton.interactable = true;
+
 
 
 		CheckLevelOpen ();
@@ -151,12 +153,12 @@ public class MainMenu : MonoBehaviour {
 
 
 	public void DeleteAllSave(){
-		PlayerPrefs.SetInt("2DIopen",1);
+//		PlayerPrefs.SetInt("2DIopen",1);
 		PlayerPrefs.SetInt ("3TPopen", 0);
 		PlayerPrefs.SetInt ("4PTopen", 0);
 		PlayerPrefs.SetInt ("5SFopen", 0);
 		PlayerPrefs.Save ();
-		dIButton.interactable = true;;
+		dIButton.interactable = true;
 		tPButton.interactable = false;
 		pTButton.interactable = false;
 		sFButton.interactable = false;

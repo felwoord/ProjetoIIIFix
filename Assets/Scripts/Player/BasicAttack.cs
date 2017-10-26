@@ -27,12 +27,13 @@ public class BasicAttack : MonoBehaviour {
 	{
 
 		if (col.collider.tag == "Enemy") {
-			col.gameObject.GetComponent<Juansito> ().Hit ();
+			if (col.collider.name == "Juansito") {
+				col.gameObject.GetComponent<Juansito> ().Hit ();
 
-			Debug.Log ("Acertou");
-
-			Destroy (gameObject);
+				Destroy (gameObject);
+			}
 		}
+
 		if (col.collider.tag == "Block") {
 			col.gameObject.GetComponent<Juansito> ().Block ();
 			Destroy (gameObject);

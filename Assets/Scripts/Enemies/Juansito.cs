@@ -17,9 +17,17 @@ public class Juansito : MonoBehaviour {
 	private int life = 3;
 
 	private float count = 0;
+	private bool movement;
+
+	private GameObject backWall, frontWall, leftWall, rightWall;
 
 	// Use this for initialization
 	void Start () {
+		backWall = GameObject.Find ("BackWall");
+		frontWall = GameObject.Find ("FrontWall");
+		leftWall = GameObject.Find ("LeftWall");
+		rightWall = GameObject.Find ("RightWall");
+
 		player = GameObject.Find ("Player");
 		rb = GetComponent<Rigidbody> ();
 
@@ -37,9 +45,24 @@ public class Juansito : MonoBehaviour {
 	void FixedUpdate () {
 		slowedTime = GameObject.Find ("Player").GetComponent<PlayerMovement> ().GetSlowedTime ();
 
+		count += Time.deltaTime;
+		if (count > 8) {
+			float rand = Random.Range (1, 10);
+			if (rand < 7) {
+				movement = true;
+			} else {
+				movement = false;
+			}
+			count = 0;
+		}
+		if (movement) {
+			Mov ();
+		} else {
+			//idle
+		}
 
-		Mov ();
 	}
+
 
 	private void Mov(){
 		Vector3 differenceVector = new Vector3 (player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y, player.transform.position.z - transform.position.z);
@@ -48,23 +71,21 @@ public class Juansito : MonoBehaviour {
 		movDirection = -diffVectorNormalized;
 		movDirection.y = 0;
 
-//		Quaternion newRotation = Quaternion.LookRotation (differenceVector, Vector3.up);
-//		newRotation.x = 0;
-//		newRotation.z = 0;
+
 
 		
 		if (slowedTime) {
 			rb.velocity = diffVectorNormalized * movST * Time.deltaTime;
-//			transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speedRotST * Time.deltaTime);
+
 		} else {
 			rb.velocity = diffVectorNormalized * mov * Time.deltaTime;
-//			transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speedRot * Time.deltaTime);
+			if (movDirection != Vector3.zero) {
+				transform.rotation = Quaternion.LookRotation (movDirection);
+			}
 		}
 
 		
-		if (movDirection != Vector3.zero) {
-			transform.rotation = Quaternion.LookRotation (movDirection);
-		}
+
 
 
 
@@ -103,4 +124,18 @@ public class Juansito : MonoBehaviour {
 		halo.enabled = true;
 	}
 
+	private void AntiBugWall(){
+		if (transform.position.z < backWall.transform.position.z) {
+			transform.position = new Vector3 (transform.position.x, transform.position.y, backWall.transform.position.z + 3);
+		}
+		if (transform.position.z > frontWall.transform.position.z) {
+			transform.position = new Vector3 (transform.position.x, transform.position.y, frontWall.transform.position.z - 3);
+		}
+		if (transform.position.x < leftWall.transform.position.x) {
+			transform.position = new Vector3 (leftWall.transform.position.x + 3, transform.position.y, transform.position.z);
+		}
+		if (transform.position.x > rightWall.transform.position.x) {
+			transform.position = new Vector3 (rightWall.transform.position.x - 3, transform.position.y, transform.position.z);
+		}
+	}
 }

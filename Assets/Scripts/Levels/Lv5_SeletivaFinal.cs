@@ -15,7 +15,10 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 	private bool apagaTexto = false;
 	private bool finishedText;
 
+	private bool doOnce = false;
+
 	private float count = 0;
+	private float count2 = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -29,22 +32,38 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 			SceneManager.LoadScene ("Menu");
 		}
 
-		count++;
-		if (count < 5){
+		count += Time.deltaTime;
+		if (count < 15){
 			ShowText ("Esse é Encostus. Ele tem indicação de alguém que você não matou, então é normal que a gente fique mais pro lado dele. Boa sorte.");
 		}
-		if (count > 5 && count < 7) {
-			//desativar caixa de texto (mesh)
-			//spawnar inimigos (uma vez)
+		if (count > 15 && count < 17) {
+			if (!doOnce) {
+				apagaTexto = true;
+				finishedText = false;
+				gameObject.GetComponent<MeshRenderer> ().enabled = false;
+				SpawnEnemies ();
+				doOnce = true;
+			}
 
-		}if (count > 7) {
-			//checkar se todos foram mortos
-			//se todos foram mortos, ativar caixa de texto e mostrar texto
-			//Aaahcabou. A vaga é sua, parabéns. Passa no RH pra pegar a relação de documentos e começa na próxima segunda. Obrigado.
-			//salvar que fase foi completada
-			//load win game scene
+		}if (count > 17) {
+			int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+			if (enemyCount == 0) {
+				gameObject.GetComponent<MeshRenderer> ().enabled = true;
+				ShowText ("Aaahcabou. A vaga é sua, parabéns. Passa no RH pra pegar a relação de documentos e começa na próxima segunda. Obrigado.");
+				count2 += Time.deltaTime;
+				if (count2 > 5) {
+//					PlayerPrefs.SetInt ("4PTopen", 1);
+//					PlayerPrefs.Save ();
+					SceneManager.LoadScene ("Menu");
+				}
+			}
+
+		
 		}
 		
+	}
+
+	private void SpawnEnemies(){
 	}
 
 

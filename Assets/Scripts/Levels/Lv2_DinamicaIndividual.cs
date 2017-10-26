@@ -25,6 +25,7 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 	private bool quest1 = false;
 	private bool doOnce = false;
 	private float count = 0;
+	private float count2 = 0;
 
 
 
@@ -34,6 +35,7 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 		guideText = GetComponent<TextMesh> ();
 		guideText.text = "";
 
+		blackFlash.enabled = true;
 		transparent = blackFlash.color;
 		transparent.a = 0f;
 
@@ -62,7 +64,7 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 
 	private void FlashIn(){
 		currentTransp = blackFlash.color;
-		currentTransp.a = Mathf.Lerp (currentTransp.a, transparent.a, 0.015f);
+		currentTransp.a = Mathf.Lerp (currentTransp.a, transparent.a, 0.01f);
 		blackFlash.color = currentTransp;
 		if (blackFlash.color.a <= 0.05f) {
 			destroyed = true;
@@ -80,7 +82,8 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 			apagaTexto = true;
 			finishedText = false;
 			if (!doOnce) {
-				//criar os esqueletos e desativar os scripts deles
+				SpawnEnemies ();
+				doOnce = true;
 			}
 
 		}
@@ -96,15 +99,24 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 	}
 
 	private void Quest1(){
-		//desativar caixa de texto (mesh)
-		//ativar os scripts dos esqueletos
-		//checkar se todos foram mortos
-		//se todos foram mortos, ativar caixa de texto e mostrar texto
-		//Ergh, a empresa precisava mesmo cortar gastos. Foice. Cortar. Hhhhhheheheh. PRÓXIMA ETAPA.
-		//salvar que fase foi completada
-		//load proxima fase
+		gameObject.GetComponent<MeshRenderer> ().enabled = false;
+		//ativar os scripts dos inimigos
+		int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+		if (enemyCount == 0) {
+			gameObject.GetComponent<MeshRenderer> ().enabled = true;
+			ShowText ("Ergh, a empresa precisava mesmo cortar gastos. Foice. Cortar. Hhhhhheheheh. PRÓXIMA ETAPA.");
+			count2 += Time.deltaTime;
+			if (count2 > 5) {
+				PlayerPrefs.SetInt ("3TPopen", 1);
+				PlayerPrefs.Save ();
+				SceneManager.LoadScene ("3TP");
+			}
+		}
+			
 	}
 
+	private void SpawnEnemies(){
+	}
 
 
 	private void ShowText(string originalText){

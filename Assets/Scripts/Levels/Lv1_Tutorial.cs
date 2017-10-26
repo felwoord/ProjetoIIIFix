@@ -111,7 +111,6 @@ public class Lv1_Tutorial : MonoBehaviour {
 			finishedText = false;
 		}
 		if (count > 25 && count < 32) {
-			Debug.Log ("SS");
 			ShowText ("Bem, ironicamente nossos\n" +
 				"funcionários, pra essa fase,\n" +
 				"já estão mortos, mas é só pra você… \n");
@@ -121,7 +120,6 @@ public class Lv1_Tutorial : MonoBehaviour {
 			finishedText = false;
 		}
 		if (count > 34 && count < 38) {
-			Debug.Log ("SS");
 			ShowText ("Pegar o “espírito” da coisa\n" +
 				"hehehe.");
 		}
@@ -353,8 +351,8 @@ public class Lv1_Tutorial : MonoBehaviour {
 		if (slowedTimeSkill) {
 			ShowText ("Eu devia ter percebido alguma coisa? Quer dizer, o tempo congelou pra você, não pra mim. Que seja, isso é o bastante. vamos para a segunda etapa.");
 			if (count > 10) {
-				PlayerPrefs.SetInt ("2DIopen", 1);
-				PlayerPrefs.Save ();
+//				PlayerPrefs.SetInt ("2DIopen", 1);
+//				PlayerPrefs.Save ();
 				SceneManager.LoadScene ("2DI");
 			}	
 		}
