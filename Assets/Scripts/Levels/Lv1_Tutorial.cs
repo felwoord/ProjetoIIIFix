@@ -28,17 +28,13 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 	private bool doOnce = false;
 
-	// Use this for initialization
 	void Start () {
 		guideText = GetComponent<TextMesh> ();
 		guideText.text = "";
 
-		//player = GameObject.Find ("Player");
-
 		Invoke ("StarTutorial", 2.0f);
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		timePassed += Time.deltaTime;
 		if (InputArcade.Apertou (0, EControle.PRETO) || InputArcade.Apertou (1, EControle.PRETO)) {
@@ -73,6 +69,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 //		GameObject playerr = Instantiate (Resources.Load ("Player")) as GameObject;
 //		playerr.transform.position = Vector3.zero;
 //		playerr.GetComponent<PlayerMovement>().enabled = false;
+//		player = GameObject.Find ("Player");
 
 		startTutorialFinished = true;
 		count = 0;
