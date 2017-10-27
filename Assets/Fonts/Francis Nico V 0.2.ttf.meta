@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: d64a8729c3cce7745812edc6b177fc2b
+timeCreated: 1509060924
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Francis Nico V 0.2
+  fontNames:
+  - Francis Nico V 0.2
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
