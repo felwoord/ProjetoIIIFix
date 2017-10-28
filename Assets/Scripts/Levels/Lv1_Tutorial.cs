@@ -27,6 +27,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private float count;
 
 	private bool doOnce = false;
+	private bool playerCreated = false;
 
 	void Start () {
 		guideText = GetComponent<TextMesh> ();
@@ -41,9 +42,12 @@ public class Lv1_Tutorial : MonoBehaviour {
 			SceneManager.LoadScene ("Menu");
 		}
 
-		isGrounded = GameObject.Find ("Player").GetComponent<PlayerMovement> ().GetIsGrounded ();
-		airborne = GameObject.Find ("Player").GetComponent<PlayerMovement> ().GetAirborne ();
-		slowedTime = GameObject.Find ("Player").GetComponent<PlayerMovement> ().GetSlowedTime ();
+		if (playerCreated) {
+			isGrounded = player.GetComponent<PlayerMovement> ().GetIsGrounded ();
+			airborne = player.GetComponent<PlayerMovement> ().GetAirborne ();
+			slowedTime = player.GetComponent<PlayerMovement> ().GetSlowedTime ();
+		}
+
 
 		if (startTutorialFinished) {
 			count += Time.deltaTime;
@@ -61,25 +65,22 @@ public class Lv1_Tutorial : MonoBehaviour {
 		}
 	}
 
-
-
-
 	private void StarTutorial(){
 //		fazer algum efeito enquanto o player aparece
 //		GameObject playerr = Instantiate (Resources.Load ("Player")) as GameObject;
 //		playerr.transform.position = Vector3.zero;
 //		playerr.GetComponent<PlayerMovement>().enabled = false;
 //		player = GameObject.Find ("Player");
+		player = Instantiate (Resources.Load ("Player")) as GameObject;
+		player.transform.position = new Vector3 (0, 7.7f, -65.0f);
+		player.name = "Player";
+		player.GetComponent<PlayerMovement> ().enabled = false;
 
 		startTutorialFinished = true;
 		count = 0;
+		playerCreated = true;
 	}
-
-
-
-
-
-
+		
 	private void Introduction(){
 		if (count < 7) {
 			ShowText ("Gh...Ghrriiim? Gh… Que seja\n " +
@@ -129,13 +130,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 		}
 	}
-
-
-
-
-
-
-
+		
 	private void Quest1(){
 
 		if (!up && !down && !left && !right) {
@@ -143,9 +138,9 @@ public class Lv1_Tutorial : MonoBehaviour {
 				"a te avaliar.\n" +
 				"(Mova Joystick esquerdo pra cima \n" +
 				"pra andar pra frente)");
-			//player.GetComponent<PlayerMovement> ().enabled = true;
+			player.GetComponent<PlayerMovement> ().enabled = true;
 
-			if (InputArcade.Eixo (0, EEixo.VERTICAL) > 0) {
+			if (InputArcade.Eixo (0, EEixo.VERTICAL) > 0 && finishedText == true) {
 				up = true;
 				apagaTexto = true;
 				finishedText = false;
@@ -158,7 +153,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 			ShowText ("Nãnãnãnão!! Por aí não, você vai sujar todo o salão.\n" +
 				"(Mova Joystick esquerdo pra esquerda para andar para a esquerda)");
 
-			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) < 0) {
+			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) < 0 && finishedText == true) {
 				up = false;
 				left = true;
 				apagaTexto = true;
@@ -170,7 +165,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 			ShowText ("Ehrm… Se importa em dar a volta pela direita, eu… Sou supersticioso heheh… \n" +
 				"(Mova o Joystick esquerdo pra direita para andar para a direita)");
 
-			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) > 0) {
+			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) > 0 && finishedText == true) {
 				left = false;
 				right = true;
 				apagaTexto = true;
@@ -182,7 +177,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 			ShowText ("Certo. Agora vira pra cá pra eu registrar sua cara no sistema.\n" +
 				"(Mova Joystick esquerdo pra baixo para andar para trás)");
 
-			if (InputArcade.Eixo (0, EEixo.VERTICAL) < 0) {
+			if (InputArcade.Eixo (0, EEixo.VERTICAL) < 0 && finishedText == true) {
 				right = false;
 				down = true;
 				apagaTexto = true;
@@ -217,19 +212,14 @@ public class Lv1_Tutorial : MonoBehaviour {
 			}
 		}  
 	}
-
-
-
-
-
-
+		
 	private void Quest2(){
 		count += Time.deltaTime;
 		if (!basicSkill && !bulletSkill && !jumpSkill && !specialSkill) {
 			ShowText ("Ok, aqui diz que você tem… Experiência em decaptação com foice, é isso?\n" +
 				"(Aperte ?? para atacar com a foice)");
 
-			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) > 0) {
+			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) > 0 && finishedText == true && isGrounded) {
 				basicSkill = true;
 				apagaTexto = true;
 				finishedText = false;
@@ -248,7 +238,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 				ShowText ("Facilidade com magia negra? \n" +
 					"(Aperte ?? para jogar uma esfera de energia)");
 
-				if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0) {
+				if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0 && finishedText == true && isGrounded) {
 					basicSkill = false;
 					bulletSkill = true;
 					apagaTexto = true;
@@ -270,7 +260,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 				ShowText ("Pulo?\n" +
 					"(Aperte ?? pra pular.");
 
-				if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0) {
+				if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0 && finishedText == true && isGrounded) {
 					bulletSkill = false;
 					jumpSkill = true;
 					apagaTexto = true;
@@ -292,7 +282,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 				ShowText ("Paredao, estilo BBB\n" +
 					"(Aperte ?? criar uma parede.");
 
-				if (InputArcade.Eixo (1, EEixo.VERTICAL) < 0) {
+				if (InputArcade.Eixo (1, EEixo.VERTICAL) < 0 && finishedText == true && isGrounded) {
 					jumpSkill = false;
 					quest2 = false;
 					quest3 = true;
@@ -303,14 +293,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 			}
 		}
 	}
-
-
-
-
-
-
-
-
+		
 	private void Quest3(){
 		count += Time.deltaTime;
 		if (!airborneSkill && !slowedTimeSkill) {
@@ -355,8 +338,6 @@ public class Lv1_Tutorial : MonoBehaviour {
 		}
 		
 	}
-
-
 
 	private void ShowText(string originalText){
 		timePassed += Time.deltaTime;

@@ -53,14 +53,13 @@ public class PlayerMovement : MonoBehaviour {
 	public Material black;
 	public Material red;
 
-//	private Renderer[] rend = new Renderer[9];
+	private Renderer rend;
 
 	private bool slowedTime;
 
 	private GameObject backWall, frontWall, leftWall, rightWall, cam;
 
 
-	// Use this for initialization
 	void Start () {
 		
 		rb = GetComponent<Rigidbody> ();
@@ -77,9 +76,8 @@ public class PlayerMovement : MonoBehaviour {
 
 		slowedTime = false;
 
-//		for(int i = 0; i < 9; i++){
-//			rend [i] = GameObject.Find ("b" + i).GetComponent<Renderer> ();
-//		}
+		rend = GetComponent<Renderer> ();
+
 
 		backWall = GameObject.Find ("BackWall");
 		frontWall = GameObject.Find ("FrontWall");
@@ -88,8 +86,7 @@ public class PlayerMovement : MonoBehaviour {
 		cam = GameObject.Find ("Main Camera");
 
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 
 		if(InputArcade.Apertou(0,EControle.AZUL) || InputArcade.Apertou(1,EControle.AZUL)){
@@ -356,7 +353,7 @@ public class PlayerMovement : MonoBehaviour {
 			specialSkill.transform.rotation = Quaternion.LookRotation (playerDirection);
 			energyBar.fillAmount -= 0.35f;
 		} else if (!isGrounded && airborne) {
-			transform.position = new Vector3 (transform.position.x, 2.185f, transform.position.z);
+			transform.position = new Vector3 (transform.position.x, 6.7f, transform.position.z);
 			GameObject specialSkill = Instantiate (Resources.Load ("SpecialSkill")) as GameObject;
 			specialSkill.transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.z + 2);
 			specialSkill.GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 50.0f);
@@ -388,9 +385,9 @@ public class PlayerMovement : MonoBehaviour {
 			Vector3 differenceVector = new Vector3 (collision.transform.position.x - transform.position.x, collision.transform.position.y - transform.position.y, collision.transform.position.z - transform.position.z);
 			Vector3 diffVectorNormalized = differenceVector.normalized;
 			transform.position = new Vector3 (transform.position.x - diffVectorNormalized.x * 15, 2.2f, transform.position.z - diffVectorNormalized.z * 15);
-//			for (int i = 0; i <= 8; i++) {
-//				rend [i].material = red;
-//			}
+
+			rend.material = red;
+
 
 			Invoke ("ChangeToBlack", 0.05f);
 
@@ -399,9 +396,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void ChangeToBlack(){
-//		for (int i = 0; i <= 8; i++) {
-//			rend [i].material = black;
-//		}
+	rend.material = black;
 	}
 
 	public bool GetIsGrounded(){

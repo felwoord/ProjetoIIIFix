@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SmoothCameraFollow : MonoBehaviour {
 
@@ -15,8 +16,12 @@ public class SmoothCameraFollow : MonoBehaviour {
 
 	void Start()
 	{
-		offset = transform.localPosition - target.localPosition;
-		LockedOn = true;
+		Scene sce = SceneManager.GetActiveScene ();
+		if (sce.name == "1Tutorial") {
+			Invoke ("StartCameraFollow", 2.1f);
+		} else {
+			StartCameraFollow ();
+		}
 	}
 
 	void FixedUpdate()
@@ -29,5 +34,11 @@ public class SmoothCameraFollow : MonoBehaviour {
 			// Smoothly interpolate between the camera's current position and it's target position.
 			transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing);
 		}
-	}  
+	}
+
+	private void StartCameraFollow(){
+		target = GameObject.Find ("Player").transform;
+		offset = transform.localPosition - target.localPosition;
+		LockedOn = true;
+	}
 }
