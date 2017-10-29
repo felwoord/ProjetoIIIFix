@@ -6,7 +6,8 @@ using ArcadePUCCampinas;
 using UnityEngine.UI;
 
 public class Lv4_Psicotecnico : MonoBehaviour {
-	private TextMesh guideText;
+	private Text guideText;
+	private Image textBox;
 
 	private float textSpeed = 0.1f;
 	private float timePassed = 0;
@@ -21,7 +22,8 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		guideText = GetComponent<TextMesh> ();
+		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
+		guideText = GetComponent<Text> ();
 		guideText.text = "";
 	}
 	
@@ -37,9 +39,10 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 		}
 		if (count > 15 && count < 17) {
 			if (!doOnce) {
+				textBox.enabled = false;
+				guideText.text = "";
 				apagaTexto = true;
 				finishedText = false;
-				gameObject.GetComponent<MeshRenderer> ().enabled = false;
 				SpawnEnemies ();
 				doOnce = true;
 			}
@@ -47,7 +50,7 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 		}if (count > 17) {
 			int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 			if (enemyCount == 0) {
-				gameObject.GetComponent<MeshRenderer> ().enabled = true;
+				textBox.enabled = true;
 				ShowText ("Aaaaaargh. Ok, vamos fazer uma seletiva final pra decidir logo com quem vamos ficar, antes que você mate o departamento inteiro.");
 				count2 += Time.deltaTime;
 				if (count2 > 5) {

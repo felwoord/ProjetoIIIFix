@@ -6,11 +6,11 @@ public class Skeletonn : MonoBehaviour {
 	private GameObject player;
 	private Vector3 movDirection;
 
-	private bool slowedTime;
-	private Rigidbody rb;
+//	private bool slowedTime;
+//	private Rigidbody rb;
 
 	private float mov;
-	private float movST;
+//	private float movST;
 
 	private Behaviour halo;
 
@@ -19,10 +19,10 @@ public class Skeletonn : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("Player");
-		rb = GetComponent<Rigidbody> ();
+//		rb = GetComponent<Rigidbody> ();
 
 		mov = Random.Range (250, 350);
-		movST = mov / 3;
+//		movST = mov / 3;
 
 		life = 999;
 
@@ -32,7 +32,7 @@ public class Skeletonn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		slowedTime = GameObject.Find ("Player").GetComponent<PlayerMovement> ().GetSlowedTime ();
+//		slowedTime = GameObject.Find ("Player").GetComponent<PlayerMovement> ().GetSlowedTime ();
 
 //		Vector3 differenceVector = new Vector3 (player.transform.position.x - transform.position.x,  player.transform.position.y - transform.position.y,  player.transform.position.z - transform.position.z);
 //		Vector3 diffVectorNormalized = differenceVector.normalized;

@@ -22,16 +22,16 @@ public class MainMenu : MonoBehaviour {
 	private GameObject reset2;
 	private GameObject sT;
 
-	private Button tutorialButton;
+//	private Button tutorialButton;
 	private Button dIButton;
 	private Button tPButton;
 	private Button pTButton;
 	private Button sFButton;
 
-	private Button sTButton;
+//	private Button sTButton;
 
-	private Button resetButton;
-	private Button reset2Button;
+//	private Button resetButton;
+//	private Button reset2Button;
 
 	private GameObject target;
 
@@ -56,15 +56,15 @@ public class MainMenu : MonoBehaviour {
 		sF = GameObject.Find ("SF");
 		sT = GameObject.Find ("StartTutorialButton");
 
-		resetButton = GameObject.Find ("ResetButton").GetComponent<Button> ();
-		reset2Button = GameObject.Find ("ResetButton2").GetComponent<Button> ();
+//		resetButton = GameObject.Find ("ResetButton").GetComponent<Button> ();
+//		reset2Button = GameObject.Find ("ResetButton2").GetComponent<Button> ();
 
-		tutorialButton = tutorial.GetComponent<Button> ();
+//		tutorialButton = tutorial.GetComponent<Button> ();
 		dIButton = dI.GetComponent<Button> ();
 		tPButton = tP.GetComponent<Button> ();
 		pTButton = pT.GetComponent<Button> ();
 		sFButton = sF.GetComponent<Button> ();
-		sTButton = sT.GetComponent<Button> ();
+//		sTButton = sT.GetComponent<Button> ();
 
 		dIButton.interactable = true;
 

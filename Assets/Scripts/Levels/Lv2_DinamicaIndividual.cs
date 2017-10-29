@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 
 public class Lv2_DinamicaIndividual : MonoBehaviour {
-
-	private TextMesh guideText;
+	private Image textBox;
+	private Text guideText;
 
 	private float textSpeed = 0.1f;
 	private float timePassed = 0;
@@ -31,8 +31,9 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
 		blackFlash = GameObject.Find ("BlackFlash").GetComponent<Image> ();
-		guideText = GetComponent<TextMesh> ();
+		guideText = GetComponent<Text> ();
 		guideText.text = "";
 
 		blackFlash.enabled = true;
@@ -75,22 +76,25 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 
 	private void StartLv2(){
 		count += Time.deltaTime;
-		if (count < 4) {
+		if (count < 15) {
 			ShowText ("Surpreso, ah? Sim, é a mesma sala. Não temos verba pra ficar esbanjando, então vamos logo. Estagiários, ataquem!!");
 		}
-		if (count > 4  && count < 6) {
+		if (count > 15  && count < 17) {
 			apagaTexto = true;
 			finishedText = false;
 			if (!doOnce) {
 				SpawnEnemies ();
+				//desativar scripts inimigos
 				doOnce = true;
 			}
 
 		}
-		if (count > 6 && count < 12) {
+		if (count > 17 && count < 32) {
 			ShowText ("Um, dois, três, quatro… Pera, cadê o resto?... Aah, que seja, os que chegarem atrasados que dêem um jeito de tentar te matar como der.");
 		}
-		if (count > 12) {
+		if (count > 32) {
+			textBox.enabled = false;
+			guideText.text = "";
 			apagaTexto = true;
 			finishedText = false;
 			quest1 = true;
@@ -99,14 +103,14 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 	}
 
 	private void Quest1(){
-		gameObject.GetComponent<MeshRenderer> ().enabled = false;
+
 		//ativar os scripts dos inimigos
 		int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 		if (enemyCount == 0) {
-			gameObject.GetComponent<MeshRenderer> ().enabled = true;
+			textBox.enabled = true;
 			ShowText ("Ergh, a empresa precisava mesmo cortar gastos. Foice. Cortar. Hhhhhheheheh. PRÓXIMA ETAPA.");
 			count2 += Time.deltaTime;
-			if (count2 > 5) {
+			if (count2 > 12) {
 				PlayerPrefs.SetInt ("3TPopen", 1);
 				PlayerPrefs.Save ();
 				SceneManager.LoadScene ("3TP");

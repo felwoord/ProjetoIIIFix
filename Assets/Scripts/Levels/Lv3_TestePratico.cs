@@ -6,7 +6,8 @@ using ArcadePUCCampinas;
 using UnityEngine.UI;
 
 public class Lv3_TestePratico : MonoBehaviour {
-	private TextMesh guideText;
+	private Text guideText;
+	private Image textBox;
 
 	private float textSpeed = 0.1f;
 	private float timePassed = 0;
@@ -22,7 +23,8 @@ public class Lv3_TestePratico : MonoBehaviour {
 	private GameObject[] juan = new GameObject[9];
 
 	void Start () {
-		guideText = GetComponent<TextMesh> ();
+		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
+		guideText = GetComponent<Text> ();
 		guideText.text = "";
 		
 	}
@@ -44,8 +46,9 @@ public class Lv3_TestePratico : MonoBehaviour {
 		if (count > 15 && count < 17) {
 			if (!doOnce) {
 				apagaTexto = true;
+				guideText.text = "";
 				finishedText = false;
-				gameObject.GetComponent<MeshRenderer> ().enabled = false;
+				textBox.enabled = false;
 				SpawnEnemies ();
 				doOnce = true;
 			}
@@ -53,7 +56,7 @@ public class Lv3_TestePratico : MonoBehaviour {
 		}if (count > 17) {
 			int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 			if (enemyCount == 0) {
-				gameObject.GetComponent<MeshRenderer> ().enabled = true;
+				textBox.enabled = true;
 				ShowText ("Ah? Você ainda tá vivo?... Aaah… Próxima fase.");
 				count2 += Time.deltaTime;
 				if (count2 > 5) {

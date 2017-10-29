@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class SmoothCameraFollow : MonoBehaviour {
 
 	// The position that that camera will be following.
-	public Transform target;            
+	private Transform target;            
 	// The speed with which the camera will be following.
 	[Range(0,1)]
 	public float smoothing = 1f;       

@@ -9,9 +9,10 @@ public class Juansito : MonoBehaviour {
 	private bool slowedTime;
 	private Rigidbody rb;
 
-	private float mov, speedRot;
-	private float movST, speedRotST;
-
+	private float mov;
+//	private float speedRot;
+	private float movST;
+//	private float speedRotST;
 	private Behaviour halo;
 
 	private int life = 3;
@@ -33,8 +34,8 @@ public class Juansito : MonoBehaviour {
 
 		mov = Random.Range (250, 350);
 		movST = mov / 3;
-		speedRot = 10;
-		speedRotST = speedRot / 3;
+//		speedRot = 10;
+//		speedRotST = speedRot / 3;
 
 		halo = (Behaviour)GetComponent ("Halo");
 		halo.enabled = false;

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using ArcadePUCCampinas;
 
 public class Lv1_Tutorial : MonoBehaviour {
-	private TextMesh guideText;
+	private Text guideText;
 
 	private GameObject player;
 
@@ -30,7 +31,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private bool playerCreated = false;
 
 	void Start () {
-		guideText = GetComponent<TextMesh> ();
+		guideText = GetComponent<Text> ();
 		guideText.text = "";
 
 		Invoke ("StarTutorial", 2.0f);
@@ -67,10 +68,6 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 	private void StarTutorial(){
 //		fazer algum efeito enquanto o player aparece
-//		GameObject playerr = Instantiate (Resources.Load ("Player")) as GameObject;
-//		playerr.transform.position = Vector3.zero;
-//		playerr.GetComponent<PlayerMovement>().enabled = false;
-//		player = GameObject.Find ("Player");
 		player = Instantiate (Resources.Load ("Player")) as GameObject;
 		player.transform.position = new Vector3 (0, 7.7f, -65.0f);
 		player.name = "Player";
@@ -83,8 +80,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 		
 	private void Introduction(){
 		if (count < 7) {
-			ShowText ("Gh...Ghrriiim? Gh… Que seja\n " +
-				"seu nome não é importante.\n" +
+			ShowText ("Gh...Ghrriiim? Gh… Que seja seu nome não é importante.\n" +
 				"Você quer a vaga de Anjo da Morte?...\n");
 		}
 		if (count > 7 && count < 9) {
