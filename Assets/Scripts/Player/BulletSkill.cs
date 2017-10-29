@@ -51,24 +51,37 @@ public class BulletSkill : MonoBehaviour {
 		}
 
 		if (col.collider.tag == "Enemy") {
-			col.gameObject.GetComponent<Juansito> ().Hit ();
+			string nameObj = col.gameObject.name;
 
-			GameObject bullet = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
-			bullet.transform.position = new Vector3 (transform.position.x + 5, 3, transform.position.z + 5);
-			bullet.GetComponent<Rigidbody> ().velocity = new Vector3 (70.72f, 0, 70.72f);
+			if (nameObj == "Juasinto") {
+				col.gameObject.GetComponent<Juansito> ().Hit ();
+			}
+			if (nameObj == "Imp") {
+			
+			}
+			if (nameObj == "Ghost") {
+			
+			}
+			if (nameObj == "Encostus") {
+			
+			}
+			if (nameObj != "Encostus") {
+				GameObject bullet = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
+				bullet.transform.position = new Vector3 (transform.position.x + 5, 3, transform.position.z + 5);
+				bullet.GetComponent<Rigidbody> ().velocity = new Vector3 (70.72f, 0, 70.72f);
 
-			GameObject bullet2 = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
-			bullet2.transform.position = new Vector3 (transform.position.x + 5, 3, transform.position.z - 5);
-			bullet2.GetComponent<Rigidbody> ().velocity = new Vector3 (70.72f, 0, -70.72f);
+				GameObject bullet2 = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
+				bullet2.transform.position = new Vector3 (transform.position.x + 5, 3, transform.position.z - 5);
+				bullet2.GetComponent<Rigidbody> ().velocity = new Vector3 (70.72f, 0, -70.72f);
 
-			GameObject bullet3 = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
-			bullet3.transform.position = new Vector3 (transform.position.x - 5, 3, transform.position.z + 5);
-			bullet3.GetComponent<Rigidbody> ().velocity = new Vector3 (-70.72f, 0, 70.72f);
+				GameObject bullet3 = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
+				bullet3.transform.position = new Vector3 (transform.position.x - 5, 3, transform.position.z + 5);
+				bullet3.GetComponent<Rigidbody> ().velocity = new Vector3 (-70.72f, 0, 70.72f);
 
-			GameObject bullet4 = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
-			bullet4.transform.position = new Vector3 (transform.position.x - 5, 3, transform.position.z - 5);
-			bullet4.GetComponent<Rigidbody> ().velocity = new Vector3 (-70.72f, 0, -70.72f);
-
+				GameObject bullet4 = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
+				bullet4.transform.position = new Vector3 (transform.position.x - 5, 3, transform.position.z - 5);
+				bullet4.GetComponent<Rigidbody> ().velocity = new Vector3 (-70.72f, 0, -70.72f);
+			}
 			Destroy (gameObject);
 
 		}

@@ -384,19 +384,19 @@ public class PlayerMovement : MonoBehaviour {
 			healthBar.fillAmount -= 0.15f;
 			Vector3 differenceVector = new Vector3 (collision.transform.position.x - transform.position.x, collision.transform.position.y - transform.position.y, collision.transform.position.z - transform.position.z);
 			Vector3 diffVectorNormalized = differenceVector.normalized;
-			transform.position = new Vector3 (transform.position.x - diffVectorNormalized.x * 15, 2.2f, transform.position.z - diffVectorNormalized.z * 15);
+			transform.position = new Vector3 (transform.position.x - diffVectorNormalized.x * 15, 7.7f, transform.position.z - diffVectorNormalized.z * 15);
 
 			rend.material = red;
 
 
-			Invoke ("ChangeToBlack", 0.05f);
+			Invoke ("ChangeToBlack", 0.08f);
 
 		}
 
 	}
 
 	private void ChangeToBlack(){
-	rend.material = black;
+		rend.material = black;
 	}
 
 	public bool GetIsGrounded(){

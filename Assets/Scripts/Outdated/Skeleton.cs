@@ -9,7 +9,7 @@ public class Skeletonn : MonoBehaviour {
 //	private bool slowedTime;
 //	private Rigidbody rb;
 
-	private float mov;
+//	private float mov;
 //	private float movST;
 
 	private Behaviour halo;
@@ -21,7 +21,7 @@ public class Skeletonn : MonoBehaviour {
 		player = GameObject.Find ("Player");
 //		rb = GetComponent<Rigidbody> ();
 
-		mov = Random.Range (250, 350);
+//		mov = Random.Range (250, 350);
 //		movST = mov / 3;
 
 		life = 999;

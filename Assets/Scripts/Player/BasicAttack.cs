@@ -27,11 +27,22 @@ public class BasicAttack : MonoBehaviour {
 	{
 
 		if (col.collider.tag == "Enemy") {
+			string nameObj = col.gameObject.name;
+
 			if (col.collider.name == "Juansito") {
 				col.gameObject.GetComponent<Juansito> ().Hit ();
-
-				Destroy (gameObject);
 			}
+			if (nameObj == "Imp") {
+
+			}
+			if (nameObj == "Ghost") {
+
+			}
+			if (nameObj == "Encostus") {
+
+			}
+
+			Destroy (gameObject);
 		}
 
 		if (col.collider.tag == "Block") {
