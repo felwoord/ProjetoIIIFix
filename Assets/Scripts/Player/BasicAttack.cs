@@ -33,7 +33,7 @@ public class BasicAttack : MonoBehaviour {
 				col.gameObject.GetComponent<Juansito> ().Hit ();
 			}
 			if (nameObj == "Imp") {
-
+				col.gameObject.GetComponent<Imp> ().Hit ();
 			}
 			if (nameObj == "Ghost") {
 				col.gameObject.GetComponent<Ghost> ().Hit();
@@ -42,6 +42,11 @@ public class BasicAttack : MonoBehaviour {
 				col.gameObject.GetComponent<Encostus> ().Hit ();
 			}
 
+			Destroy (gameObject);
+		}
+
+		if (col.collider.tag == "Turret") {
+			Destroy (col.gameObject);
 			Destroy (gameObject);
 		}
 

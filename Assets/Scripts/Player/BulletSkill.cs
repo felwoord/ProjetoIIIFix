@@ -57,7 +57,7 @@ public class BulletSkill : MonoBehaviour {
 				col.gameObject.GetComponent<Juansito> ().Hit ();
 			}
 			if (nameObj == "Imp") {
-			
+				col.gameObject.GetComponent<Imp> ().Hit ();
 			}
 			if (nameObj == "Ghost") {
 				col.gameObject.GetComponent<Ghost> ().Hit();
@@ -89,6 +89,10 @@ public class BulletSkill : MonoBehaviour {
 			rb.constraints = RigidbodyConstraints.FreezePositionY;
 		}
 		if (col.collider.tag == "Block") {
+			Destroy (gameObject);
+		}
+		if (col.collider.tag == "Turret") {
+			Destroy (col.gameObject);
 			Destroy (gameObject);
 		}
 	}
