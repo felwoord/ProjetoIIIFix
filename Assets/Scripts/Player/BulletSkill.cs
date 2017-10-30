@@ -63,7 +63,7 @@ public class BulletSkill : MonoBehaviour {
 			
 			}
 			if (nameObj == "Encostus") {
-			
+				col.gameObject.GetComponent<Encostus> ().Hit ();
 			}
 			if (nameObj != "Encostus") {
 				GameObject bullet = Instantiate (Resources.Load ("BulletSkill")) as GameObject;

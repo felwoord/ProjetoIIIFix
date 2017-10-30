@@ -39,7 +39,7 @@ public class BasicAttack : MonoBehaviour {
 
 			}
 			if (nameObj == "Encostus") {
-
+				col.gameObject.GetComponent<Encostus> ().Hit ();
 			}
 
 			Destroy (gameObject);
