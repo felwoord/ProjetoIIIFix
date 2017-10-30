@@ -19,8 +19,9 @@ public class Turret : MonoBehaviour {
 		count += Time.deltaTime;
 
 		if (count > 3) {
-			//CheckPosition ();
-			DrawLine (transform.position, player.transform.position, col); 
+			CheckPosition ();
+			DrawLine (transform.position, newPos, col); 
+			Invoke ("Shot", 2f);
 			count = 0;
 		}
 	}
@@ -39,21 +40,17 @@ public class Turret : MonoBehaviour {
 		GameObject.Destroy(myLine, duration);
 	}
 
+	void Shot(){
+		GameObject bullet = Instantiate(Resources.Load("EnemyBullet")) as GameObject;
+		bullet.transform.position = transform.position;
+		bullet.GetComponent<Rigidbody> ().velocity = (player.transform.position - transform.position).normalized * 10;
+	}
+
 	void CheckPosition(){
-//		if (transform.position.x - player.transform.position.x > 0) {
-//			newPos.x = player.transform.position.x * 5;
-//		} else {
-//			newPos.x = player.transform.position.x * 5;		
-//		}
-//
-//		if (transform.position.z - player.transform.position.z > 0) {
-//			newPos.z = player.transform.position.z * 5;
-//		} else {
-//			newPos.z = player.transform.position.z * 5;		
-//		}
-		newPos.x = player.transform.position.x * 10;
+
+		newPos.x = player.transform.position.x;
 		newPos.y = transform.position.y;
-		newPos.z = player.transform.position.z * 10;
+		newPos.z = player.transform.position.z;
 
 	}
 }
