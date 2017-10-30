@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Juansito : MonoBehaviour {
+public class Ghost : MonoBehaviour {
 	private GameObject player;
 	private Vector3 movDirection;
 
@@ -10,9 +10,9 @@ public class Juansito : MonoBehaviour {
 	private Rigidbody rb;
 
 	private float mov;
-//	private float speedRot;
+	//	private float speedRot;
 	private float movST;
-//	private float speedRotST;
+	//	private float speedRotST;
 	private Behaviour halo;
 
 	private int life = 3;
@@ -32,16 +32,16 @@ public class Juansito : MonoBehaviour {
 		player = GameObject.Find ("Player");
 		rb = GetComponent<Rigidbody> ();
 
-		mov = Random.Range (250, 350);
+		mov = Random.Range (350, 450);
 		movST = mov / 3;
-//		speedRot = 10;
-//		speedRotST = speedRot / 3;
+		//		speedRot = 10;
+		//		speedRotST = speedRot / 3;
 
 		halo = (Behaviour)GetComponent ("Halo");
 		halo.enabled = false;
 
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		slowedTime = GameObject.Find ("Player").GetComponent<PlayerMovement> ().GetSlowedTime ();
@@ -56,6 +56,7 @@ public class Juansito : MonoBehaviour {
 			}
 			count = 0;
 		}
+
 		if (movement) {
 			Mov ();
 		} else {
@@ -73,29 +74,23 @@ public class Juansito : MonoBehaviour {
 		movDirection.y = 0;
 
 
-
-		
 		if (slowedTime) {
-			//rb.velocity = diffVectorNormalized * movST * Time.deltaTime;
+			rb.velocity = diffVectorNormalized * movST * Time.deltaTime;
 
 		} else {
 			rb.velocity = diffVectorNormalized * mov * Time.deltaTime;
 			if (movDirection != Vector3.zero) {
-				transform.rotation = Quaternion.LookRotation (movDirection);
 			}
 		}
 
-		
-
-
-
+		transform.rotation = Quaternion.LookRotation (-movDirection);
 
 	}
-		
+
 	public void Hit(){
 		Vector3 differenceVector = new Vector3 (transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y, transform.position.z - player.transform.position.z);
 		Vector3 diffVectorNormalized = differenceVector.normalized;
-		transform.position = new Vector3 (transform.position.x - diffVectorNormalized.x * -15, 7.83f, transform.position.z - diffVectorNormalized.z * -15);
+		transform.position = new Vector3 (transform.position.x - diffVectorNormalized.x * -15, 6.80f, transform.position.z - diffVectorNormalized.z * -15);
 		player.GetComponent<PlayerMovement> ().AddEnergy ();
 
 
@@ -109,13 +104,7 @@ public class Juansito : MonoBehaviour {
 		if (this.life <= 0)
 			Destroy (gameObject);
 	}
-
-	public void Block()
-	{
-		Vector3 differenceVector = new Vector3 (transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y, transform.position.z - player.transform.position.z);
-		Vector3 diffVectorNormalized = differenceVector.normalized;
-		transform.position = new Vector3 (transform.position.x - diffVectorNormalized.x * -7.5f, 7.83f, transform.position.z - diffVectorNormalized.z * -7.5f);
-	}
+		
 
 	private void DeactiveHalo(){
 		halo.enabled = false;
@@ -139,4 +128,5 @@ public class Juansito : MonoBehaviour {
 			transform.position = new Vector3 (rightWall.transform.position.x - 3, transform.position.y, transform.position.z);
 		}
 	}
+
 }

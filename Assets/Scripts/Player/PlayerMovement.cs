@@ -317,7 +317,7 @@ public class PlayerMovement : MonoBehaviour {
 	private void BasicAttack(){
 		if (isGrounded) {
 			GameObject basicAttack = Instantiate (Resources.Load ("BasicAttack")) as GameObject;
-			basicAttack.transform.position = new Vector3 (transform.position.x + playerDirection.x * 7.0f, transform.position.y + playerDirection.y * 7.0f, transform.position.z + playerDirection.z * 7.0f);
+			basicAttack.transform.position = new Vector3 (transform.position.x + playerDirection.x * 5.0f, 3.5f, transform.position.z + playerDirection.z * 5.0f);
 			basicAttack.transform.Rotate (playerDirection);
 		} else {
 			GameObject basicAttack = Instantiate (Resources.Load ("BasicAttack")) as GameObject;

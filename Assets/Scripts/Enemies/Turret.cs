@@ -18,7 +18,7 @@ public class Turret : MonoBehaviour {
 	void Update () {
 		count += Time.deltaTime;
 
-		if (count > 3) {
+		if (count > 5) {
 			CheckPosition ();
 			DrawLine (transform.position, newPos, col); 
 			Invoke ("Shot", 2f);
@@ -43,7 +43,7 @@ public class Turret : MonoBehaviour {
 	void Shot(){
 		GameObject bullet = Instantiate(Resources.Load("EnemyBullet")) as GameObject;
 		bullet.transform.position = transform.position;
-		bullet.GetComponent<Rigidbody> ().velocity = (player.transform.position - transform.position).normalized * 10;
+		bullet.GetComponent<Rigidbody> ().velocity = (newPos - transform.position).normalized * 50;
 	}
 
 	void CheckPosition(){

@@ -36,7 +36,7 @@ public class BasicAttack : MonoBehaviour {
 
 			}
 			if (nameObj == "Ghost") {
-
+				col.gameObject.GetComponent<Ghost> ().Hit();
 			}
 			if (nameObj == "Encostus") {
 				col.gameObject.GetComponent<Encostus> ().Hit ();
