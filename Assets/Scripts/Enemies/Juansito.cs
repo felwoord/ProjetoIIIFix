@@ -11,7 +11,7 @@ public class Juansito : MonoBehaviour {
 
 	private float mov;
 //	private float speedRot;
-	private float movST;
+//	private float movST;
 //	private float speedRotST;
 	private Behaviour halo;
 
@@ -33,7 +33,7 @@ public class Juansito : MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
 
 		mov = Random.Range (250, 350);
-		movST = mov / 3;
+//		movST = mov / 3;
 //		speedRot = 10;
 //		speedRotST = speedRot / 3;
 
@@ -59,9 +59,10 @@ public class Juansito : MonoBehaviour {
 		if (movement) {
 			Mov ();
 		} else {
-			//idle
+			rb.velocity = Vector3.zero;
 		}
 
+		AntiBugWall ();
 	}
 
 

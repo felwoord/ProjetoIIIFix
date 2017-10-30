@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 
 public class Lv2_DinamicaIndividual : MonoBehaviour {
+	private GameObject player;
+
 	private Image textBox;
 	private Text guideText;
 
@@ -27,10 +29,14 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 	private float count = 0;
 	private float count2 = 0;
 
+	private GameObject[] ghost = new GameObject[9];
+
 
 
 	// Use this for initialization
 	void Start () {
+		player = GameObject.Find ("Player");
+		player.GetComponent<PlayerMovement> ().enabled = false;
 		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
 		blackFlash = GameObject.Find ("BlackFlash").GetComponent<Image> ();
 		guideText = GetComponent<Text> ();
@@ -39,6 +45,7 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 		blackFlash.enabled = true;
 		transparent = blackFlash.color;
 		transparent.a = 0f;
+
 
 
 	}
@@ -84,7 +91,6 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 			finishedText = false;
 			if (!doOnce) {
 				SpawnEnemies ();
-				//desativar scripts inimigos
 				doOnce = true;
 			}
 
@@ -93,6 +99,10 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 			ShowText ("Um, dois, três, quatro… Pera, cadê o resto?... Aah, que seja, os que chegarem atrasados que dêem um jeito de tentar te matar como der.");
 		}
 		if (count > 32) {
+			for (int i = 0; i <= 8; i++) {
+				ghost[i].GetComponent<Ghost> ().enabled = true;
+			}
+			player.GetComponent<PlayerMovement> ().enabled = true;
 			textBox.enabled = false;
 			guideText.text = "";
 			apagaTexto = true;
@@ -103,8 +113,6 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 	}
 
 	private void Quest1(){
-
-		//ativar os scripts dos inimigos
 		int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 		if (enemyCount == 0) {
 			textBox.enabled = true;
@@ -120,7 +128,26 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 	}
 
 	private void SpawnEnemies(){
+
+		for (int i = 0; i <= 8; i++) {
+			ghost[i] = Instantiate (Resources.Load ("Ghost")) as GameObject;
+			ghost[i].name = "Ghost";
+			ghost[i].GetComponent<Ghost> ().enabled = false;
+		}
+
+
+		ghost [0].transform.position = new Vector3 (0, 6.8f, 0);
+		ghost [1].transform.position = new Vector3 (90, 6.8f, 0);
+		ghost [2].transform.position = new Vector3 (25, 6.8f, 25);
+		ghost [3].transform.position = new Vector3 (-25, 6.8f, 25);
+		ghost [4].transform.position = new Vector3 (50, 6.8f, 25);
+		ghost [5].transform.position = new Vector3 (-50, 6.8f, 25);
+		ghost [6].transform.position = new Vector3 (50, 6.8f, 0);
+		ghost [7].transform.position = new Vector3 (25, 6.8f, 0);
+		ghost [8].transform.position = new Vector3 (75, 6.8f, 0);
+
 	}
+
 
 
 	private void ShowText(string originalText){

@@ -15,7 +15,7 @@ public class Ghost : MonoBehaviour {
 	//	private float speedRotST;
 	private Behaviour halo;
 
-	private int life = 3;
+	private int life = 8;
 
 	private float count = 0;
 	private bool movement;
@@ -47,7 +47,7 @@ public class Ghost : MonoBehaviour {
 		slowedTime = GameObject.Find ("Player").GetComponent<PlayerMovement> ().GetSlowedTime ();
 
 		count += Time.deltaTime;
-		if (count > 8) {
+		if (count > 3) {
 			float rand = Random.Range (1, 10);
 			if (rand < 7) {
 				movement = true;
@@ -60,9 +60,10 @@ public class Ghost : MonoBehaviour {
 		if (movement) {
 			Mov ();
 		} else {
-			//idle
+			rb.velocity = Vector3.zero;
 		}
 
+		AntiBugWall ();
 	}
 
 
@@ -116,16 +117,16 @@ public class Ghost : MonoBehaviour {
 
 	private void AntiBugWall(){
 		if (transform.position.z < backWall.transform.position.z) {
-			transform.position = new Vector3 (transform.position.x, transform.position.y, backWall.transform.position.z + 3);
+			transform.position = new Vector3 (transform.position.x, transform.position.y, backWall.transform.position.z + 10);
 		}
 		if (transform.position.z > frontWall.transform.position.z) {
-			transform.position = new Vector3 (transform.position.x, transform.position.y, frontWall.transform.position.z - 3);
+			transform.position = new Vector3 (transform.position.x, transform.position.y, frontWall.transform.position.z - 10);
 		}
 		if (transform.position.x < leftWall.transform.position.x) {
-			transform.position = new Vector3 (leftWall.transform.position.x + 3, transform.position.y, transform.position.z);
+			transform.position = new Vector3 (leftWall.transform.position.x + 10, transform.position.y, transform.position.z);
 		}
 		if (transform.position.x > rightWall.transform.position.x) {
-			transform.position = new Vector3 (rightWall.transform.position.x - 3, transform.position.y, transform.position.z);
+			transform.position = new Vector3 (rightWall.transform.position.x - 10, transform.position.y, transform.position.z);
 		}
 	}
 

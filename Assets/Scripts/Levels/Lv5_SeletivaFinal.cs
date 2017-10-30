@@ -21,6 +21,8 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 	private float count = 0;
 	private float count2 = 0;
 
+	private GameObject encostus;
+
 	// Use this for initialization
 	void Start () {
 		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
@@ -65,6 +67,8 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 	}
 
 	private void SpawnEnemies(){
+		encostus = Instantiate (Resources.Load ("Encostus")) as GameObject;
+		encostus.name = "Encostus";
 	}
 
 

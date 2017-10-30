@@ -20,7 +20,8 @@ public class Lv3_TestePratico : MonoBehaviour {
 
 	private bool doOnce = false;
 
-	private GameObject[] juan = new GameObject[9];
+	private GameObject[] juan = new GameObject[4];
+	private GameObject[] ghost = new GameObject[5];
 
 	void Start () {
 		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
@@ -70,32 +71,41 @@ public class Lv3_TestePratico : MonoBehaviour {
 	}
 
 	private void SpawnEnemies(){
-		juan[0] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[0].transform.position = new Vector3 (-75, 7.83f, 5);
+		juan [0] = Instantiate (Resources.Load ("Juansito")) as GameObject;
+		juan [0].transform.position = new Vector3 (-75, 7.83f, 5);
+		juan [0].name = "Juansito";
 
-		juan[1] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[1].transform.position = new Vector3 (0, 7.83f, 5);
+		juan [1] = Instantiate (Resources.Load ("Juansito")) as GameObject;
+		juan [1].transform.position = new Vector3 (0, 7.83f, 5);
+		juan [1].name = "Juansito";
 
-		juan[2] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[2].transform.position = new Vector3 (75, 7.83f, 5);
+		juan [2] = Instantiate (Resources.Load ("Juansito")) as GameObject;
+		juan [2].transform.position = new Vector3 (75, 7.83f, 5);
+		juan [2].name = "Juansito";
 
-		juan[3] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[3].transform.position = new Vector3 (-75, 7.83f, 30);
+		juan [3] = Instantiate (Resources.Load ("Juansito")) as GameObject;
+		juan [3].transform.position = new Vector3 (-75, 7.83f, 30);
+		juan [3].name = "Juansito";
 
-		juan[4] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[4].transform.position = new Vector3 (0, 7.83f, 30);
+		ghost [0] = Instantiate (Resources.Load ("Ghost")) as GameObject;
+		ghost [0].transform.position = new Vector3 (Random.Range (-180, 180), 6.8f, Random.Range (-180, 180));
+		ghost [0].name = "Ghost";
 
-		juan[5] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[5].transform.position = new Vector3 (75, 7.83f, 30);
+		ghost [1] = Instantiate (Resources.Load ("Ghost")) as GameObject;
+		ghost [1].transform.position = new Vector3 (Random.Range (-180, 180), 6.8f, Random.Range (-180, 180));
+		ghost [1].name = "Ghost";
 
-		juan[6] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[6].transform.position = new Vector3 (-75, 7.83f, 80);
+		ghost [2] = Instantiate (Resources.Load ("Ghost")) as GameObject;
+		ghost [2].transform.position = new Vector3 (Random.Range (-180, 180), 6.8f, Random.Range (-180, 180));
+		ghost [2].name = "Ghost";
 
-		juan[7] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[7].transform.position = new Vector3 (0, 7.83f, 80);
+		ghost [3] = Instantiate (Resources.Load ("Ghost")) as GameObject;
+		ghost [3].transform.position = new Vector3 (Random.Range (-180, 180), 6.8f, Random.Range (-180, 180));
+		ghost [3].name = "Ghost";
 
-		juan[8] = Instantiate (Resources.Load ("Juansito")) as GameObject;
-		juan[8].transform.position = new Vector3 (75, 7.83f, 80);
+		ghost [4] = Instantiate (Resources.Load ("Ghost")) as GameObject;
+		ghost [4].transform.position = new Vector3 (Random.Range (-180, 180), 6.8f, Random.Range (-180, 180));
+		ghost [4].name = "Ghost";
 	}
 
 	private void ShowText(string originalText){

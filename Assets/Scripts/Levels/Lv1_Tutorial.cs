@@ -30,6 +30,9 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private bool doOnce = false;
 	private bool playerCreated = false;
 
+	private bool ghostCreated = false;
+	private GameObject ghost;
+
 	void Start () {
 		guideText = GetComponent<Text> ();
 		guideText.text = "";
@@ -63,6 +66,10 @@ public class Lv1_Tutorial : MonoBehaviour {
 		}
 		if (quest3) {
 			Quest3 ();
+		}
+
+		if (ghostCreated) {
+			GhostCreated ();
 		}
 	}
 
@@ -187,11 +194,13 @@ public class Lv1_Tutorial : MonoBehaviour {
 				ShowText ("Perfeito");
 			}
 			if (count > 2 && !doOnce) {
+				player.GetComponent<PlayerMovement> ().enabled = false;
 //				fazer algum efeito enquanto o ghost aparece
-//				GameObject ghost = Instantiate (Resources.Load ("Ghost")) as GameObject;
-//				ghost.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z + 10);
-//				ghost.GetComponent<Ghost> ().enabled = false;
-//				ghostCount++;
+				ghost = Instantiate (Resources.Load ("Ghost")) as GameObject;
+				ghost.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z + 30);
+				ghost.name = "Ghost";
+				ghost.GetComponent<Ghost> ().enabled = false;
+				ghostCreated = true;
 				doOnce = true;
 				apagaTexto = true;
 				finishedText = false;
@@ -205,6 +214,9 @@ public class Lv1_Tutorial : MonoBehaviour {
 				quest1 = false;
 				quest2 = true;
 				count = 0;
+				player.GetComponent<PlayerMovement> ().enabled = true;
+				ghost.GetComponent<Ghost> ().enabled = true;
+
 			}
 		}  
 	}
@@ -333,6 +345,16 @@ public class Lv1_Tutorial : MonoBehaviour {
 			}	
 		}
 		
+	}
+
+	private void GhostCreated(){
+		float ghostCount;
+		ghostCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+		if (ghostCount == 0) {
+			ghost = Instantiate (Resources.Load ("Ghost")) as GameObject;
+			ghost.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z + 30);
+			ghost.name = "Ghost";
+		}
 	}
 
 	private void ShowText(string originalText){

@@ -349,8 +349,9 @@ public class PlayerMovement : MonoBehaviour {
 	private void SpecialAttack(){
 		if (isGrounded) {
 			GameObject specialSkill = Instantiate (Resources.Load ("SpecialSkill")) as GameObject;
-			specialSkill.transform.position = new Vector3 (transform.position.x + playerDirection.x * 20, transform.position.y + playerDirection.y * 20, transform.position.z + playerDirection.z * 20);
+			specialSkill.transform.position = new Vector3 (transform.position.x + playerDirection.x * 20,  3f, transform.position.z + playerDirection.z * 20);
 			specialSkill.transform.rotation = Quaternion.LookRotation (playerDirection);
+			specialSkill.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
 			energyBar.fillAmount -= 0.35f;
 		} else if (!isGrounded && airborne) {
 			transform.position = new Vector3 (transform.position.x, 6.7f, transform.position.z);
