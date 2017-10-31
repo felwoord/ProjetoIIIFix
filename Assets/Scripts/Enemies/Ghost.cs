@@ -58,9 +58,11 @@ public class Ghost : MonoBehaviour {
 		}
 
 		if (movement) {
+			rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
 			Mov ();
 		} else {
 			rb.velocity = Vector3.zero;
+			rb.constraints = RigidbodyConstraints.FreezeAll;
 		}
 
 		AntiBugWall ();
@@ -127,6 +129,9 @@ public class Ghost : MonoBehaviour {
 		}
 		if (transform.position.x > rightWall.transform.position.x) {
 			transform.position = new Vector3 (rightWall.transform.position.x - 10, transform.position.y, transform.position.z);
+		}
+		if (transform.position.y < 5.5f) {
+			transform.position = new Vector3 (transform.position.x, 6.8f, transform.position.z);
 		}
 	}
 

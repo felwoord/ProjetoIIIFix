@@ -40,7 +40,7 @@ public class Imp : MonoBehaviour {
 		player = GameObject.Find ("Player");
 		rb = GetComponent<Rigidbody> ();
 
-		mov = Random.Range (350, 450);
+		mov = Random.Range (150, 200);
 		movST = mov / 3;
 		//		speedRot = 10;
 		//		speedRotST = speedRot / 3;
@@ -53,7 +53,7 @@ public class Imp : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		turretCount = GameObject.FindGameObjectsWithTag ("Turret").Length;
-		if (turretCount < 4) {
+		if (turretCount < 2) {
 			countT += Time.deltaTime;
 		}
 
@@ -78,9 +78,11 @@ public class Imp : MonoBehaviour {
 		}
 
 		if (movement) {
+			rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
 			Mov ();
 		} else {
 			rb.velocity = Vector3.zero;
+			rb.constraints = RigidbodyConstraints.FreezeAll;
 		}
 
 		AntiBugWall ();
@@ -147,6 +149,9 @@ public class Imp : MonoBehaviour {
 		}
 		if (transform.position.x > rightWall.transform.position.x) {
 			transform.position = new Vector3 (rightWall.transform.position.x - 10, transform.position.y, transform.position.z);
+		}
+		if (transform.position.y < 5.5f) {
+			transform.position = new Vector3 (transform.position.x, 5.8f, transform.position.z);
 		}
 	}
 		

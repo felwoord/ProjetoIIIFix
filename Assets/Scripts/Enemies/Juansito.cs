@@ -35,7 +35,7 @@ public class Juansito : MonoBehaviour {
 		mov = Random.Range (250, 350);
 //		movST = mov / 3;
 //		speedRot = 10;
-//		speedRotST = speedRot / 3;
+//		speedRotST = speedRot / 3
 
 		halo = (Behaviour)GetComponent ("Halo");
 		halo.enabled = false;
@@ -57,9 +57,11 @@ public class Juansito : MonoBehaviour {
 			count = 0;
 		}
 		if (movement) {
+			rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
 			Mov ();
 		} else {
 			rb.velocity = Vector3.zero;
+			rb.constraints = RigidbodyConstraints.FreezeAll;
 		}
 
 		AntiBugWall ();
@@ -138,6 +140,9 @@ public class Juansito : MonoBehaviour {
 		}
 		if (transform.position.x > rightWall.transform.position.x) {
 			transform.position = new Vector3 (rightWall.transform.position.x - 3, transform.position.y, transform.position.z);
+		}
+		if (transform.position.y < 7f) {
+			transform.position = new Vector3 (transform.position.x, 7.83f, transform.position.z);
 		}
 	}
 }

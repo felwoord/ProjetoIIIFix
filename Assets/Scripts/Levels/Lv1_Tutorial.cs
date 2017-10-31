@@ -37,7 +37,8 @@ public class Lv1_Tutorial : MonoBehaviour {
 		guideText = GetComponent<Text> ();
 		guideText.text = "";
 
-		Invoke ("StarTutorial", 2.0f);
+		Invoke ("StarTutorial", 2.0f);	
+
 	}
 
 	void Update () {
@@ -50,6 +51,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 			isGrounded = player.GetComponent<PlayerMovement> ().GetIsGrounded ();
 			airborne = player.GetComponent<PlayerMovement> ().GetAirborne ();
 			slowedTime = player.GetComponent<PlayerMovement> ().GetSlowedTime ();
+			player.GetComponent<PlayerMovement> ().AddEnergy ();
 		}
 
 

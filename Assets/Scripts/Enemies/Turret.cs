@@ -6,7 +6,7 @@ public class Turret : MonoBehaviour {
 	private GameObject player;
 	private Color col;
 
-	private Vector3 newPos;
+	private Vector3 newPos, shotDirection;
 	private float count = 0;
 	// Use this for initialization
 	void Start () {
@@ -38,16 +38,17 @@ public class Turret : MonoBehaviour {
 		lr.SetPosition(0, start);
 		lr.SetPosition(1, end);
 		GameObject.Destroy(myLine, duration);
+		shotDirection = (end - start).normalized;
 	}
 
 	void Shot(){
 		GameObject bullet = Instantiate(Resources.Load("EnemyBullet")) as GameObject;
 		bullet.transform.position = transform.position;
-		bullet.GetComponent<Rigidbody> ().velocity = (newPos - transform.position).normalized * 50;
+		bullet.transform.position = new Vector3 (transform.position.x + shotDirection.x * 5, transform.position.y, transform.position.z + shotDirection.z * 5);
+		bullet.GetComponent<Rigidbody> ().velocity = shotDirection * 500;
 	}
 
 	void CheckPosition(){
-
 		newPos.x = player.transform.position.x;
 		newPos.y = transform.position.y;
 		newPos.z = player.transform.position.z;

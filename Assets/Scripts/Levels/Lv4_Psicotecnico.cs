@@ -71,15 +71,15 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 
 	private void SpawnEnemies(){
 		imp [0] = Instantiate (Resources.Load ("Imp")) as GameObject;
-		imp [0].transform.position = new Vector3 (Random.Range (-180, 180), transform.position.y, Random.Range (-180, 180));
+		imp [0].transform.position = new Vector3 (Random.Range (-180, 180), 5.8f, Random.Range (-180, 180));
 		imp [0].name = "Imp";
 
 		imp [1] = Instantiate (Resources.Load ("Imp")) as GameObject;
-		imp [1].transform.position = new Vector3 (Random.Range (-180, 180), transform.position.y, Random.Range (-180, 180));
+		imp [1].transform.position = new Vector3 (Random.Range (-180, 180), 5.8f, Random.Range (-180, 180));
 		imp [1].name = "Imp";
 
 		imp [2] = Instantiate (Resources.Load ("Imp")) as GameObject;
-		imp [2].transform.position = new Vector3 (Random.Range (-180, 180), transform.position.y, Random.Range (-180, 180));
+		imp [2].transform.position = new Vector3 (Random.Range (-180, 180), 5.8f, Random.Range (-180, 180));
 		imp [2].name = "Imp";
 
 		juan [0] = Instantiate (Resources.Load ("Juansito")) as GameObject;

@@ -28,6 +28,8 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
 		guideText = GetComponent<Text> ();
 		guideText.text = "";
+		encostus = GameObject.Find ("Encostus");
+		encostus.GetComponent<Encostus> ().enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -67,8 +69,9 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 	}
 
 	private void SpawnEnemies(){
-		encostus = Instantiate (Resources.Load ("Encostus")) as GameObject;
-		encostus.name = "Encostus";
+//		encostus = Instantiate (Resources.Load ("Encostus")) as GameObject;
+//		encostus.name = "Encostus";
+		encostus.GetComponent<Encostus> ().enabled = true;
 	}
 
 

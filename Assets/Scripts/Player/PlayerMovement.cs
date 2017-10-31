@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void EnergyBarInter(){
 		if (energyBar.fillAmount < 1 && !airborne && !slowedTime) {
-			energyBar.fillAmount += Time.deltaTime / 10;
+			energyBar.fillAmount += Time.deltaTime / 50;
 		}
 		if (airborne) {
 			energyBar.fillAmount -= Time.deltaTime / 5;
@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		if (slowedTime) {
-			energyBar.fillAmount -= Time.deltaTime / 20;
+			energyBar.fillAmount -= Time.deltaTime / 10;
 			clock.enabled = true;
 		} else {
 			clock.enabled = false;
@@ -265,7 +265,7 @@ public class PlayerMovement : MonoBehaviour {
 				Jump ();
 			}
 			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0) {
-				if (energyBar.fillAmount >= 0.2f) {
+				if (energyBar.fillAmount >= 0.99f) {
 					ShotAttack ();
 				}
 			}
@@ -334,12 +334,12 @@ public class PlayerMovement : MonoBehaviour {
 			GameObject bullet = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
 			bullet.transform.position = new Vector3 (transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
 			bullet.GetComponent<Rigidbody> ().velocity = playerDirection * 100;
-			energyBar.fillAmount -= 0.2f;
+			energyBar.fillAmount -= 0.99f;
 		} else if (!isGrounded && airborne) {
 			GameObject bullet = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
 			bullet.transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 			bullet.GetComponent<Rigidbody> ().velocity = new Vector3 (playerDirection.x * 100, playerDirection.y - 25, playerDirection.z * 100);
-			energyBar.fillAmount -= 0.2f;
+			energyBar.fillAmount -= 0.99f;
 			rb.constraints = ~RigidbodyConstraints.FreezePosition;
 			airborne = false;
 		} else if (!isGrounded && !airborne) {
@@ -409,10 +409,12 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void AddEnergy(){
-		if (!slowedTime) {
-			energyBar.fillAmount += 0.1f;
-		} else {
-			energyBar.fillAmount += 0.01f;
+		if (energyBar.fillAmount < 1) {
+			if (!slowedTime) {
+				energyBar.fillAmount += 0.1f;
+			} else {
+				energyBar.fillAmount += 0.01f;
+			}
 		}
 	}
 
