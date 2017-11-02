@@ -10,7 +10,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 	private GameObject player;
 
-	private float textSpeed = 0.1f;
+	private float textSpeed = 0.16f;
 	private float timePassed = 0;
 	private int textPosition = 0;
 	private bool apagaTexto = false;
@@ -33,11 +33,20 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private bool ghostCreated = false;
 	private GameObject ghost;
 
+	private AudioSource speaker;
+	public AudioClip[] vampeta = new AudioClip[17];
+	public AudioClip[] fantasma = new AudioClip[3];
+	private bool playAudioOnce = false;
+
 	void Start () {
 		guideText = GetComponent<Text> ();
 		guideText.text = "";
 
+		speaker = GameObject.Find ("Speaker").GetComponent<AudioSource> ();
+
 		Invoke ("StarTutorial", 2.0f);	
+
+
 
 	}
 
@@ -51,7 +60,6 @@ public class Lv1_Tutorial : MonoBehaviour {
 			isGrounded = player.GetComponent<PlayerMovement> ().GetIsGrounded ();
 			airborne = player.GetComponent<PlayerMovement> ().GetAirborne ();
 			slowedTime = player.GetComponent<PlayerMovement> ().GetSlowedTime ();
-			player.GetComponent<PlayerMovement> ().AddEnergy ();
 		}
 
 
@@ -80,7 +88,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 		player = Instantiate (Resources.Load ("Player")) as GameObject;
 		player.transform.position = new Vector3 (0, 7.7f, -65.0f);
 		player.name = "Player";
-		player.GetComponent<PlayerMovement> ().enabled = false;
+		//player.GetComponent<PlayerMovement> ().enabled = false;
 
 		startTutorialFinished = true;
 		count = 0;
@@ -88,50 +96,52 @@ public class Lv1_Tutorial : MonoBehaviour {
 	}
 		
 	private void Introduction(){
-		if (count < 7) {
-			ShowText ("Gh...Ghrriiim? Gh… Que seja seu nome não é importante.\n" +
-				"Você quer a vaga de Anjo da Morte?...\n");
+		if (count < 18) {
+			PlayAudio (vampeta [0]);
+			ShowText ("Gh...Ghrriiim? Gh… Que seja, seu nome não é importante! Você quer a vaga de Anjo da Morte?... " +
+			"Eehhr vamos lá. Nessa seleção você vai ter que ahn… Matar. É óbvio. É pra isso que você quer o emprego, afinal");
 		}
-		if (count > 7 && count < 9) {
+		if (count > 18 && count < 19) {
 			apagaTexto = true;
 			finishedText = false;
 		}
-		if (count > 9 && count < 16) {
-			ShowText ("Que pretensioso.\n" +
-				"Nessa seleção você vai ter que ahn…\n" +
-				"Matar, é óbvio.\n");
+		if (count > 19 && count < 39) {
+			ShowText ("Ironicamente nossos funcionários pra essa fase já estão mortos, mas é só você… Pegar o “espírito” da coisa heheh. \n" +
+			"Vai ahn… Até ali pra eu começar a te avaliar.\n" +
+			"(Imagem Manete) para andar pra frente");
 		}
-		if (count > 16 && count < 18) {
-			apagaTexto = true;
-			finishedText = false;
-		}
-		if (count > 18 && count < 23) {
-			ShowText ("É pra isso que você quer o\n" +
-				"emprego, afinal hehehehe…\n");
-		}
-		if (count > 23 && count < 25) {
-			apagaTexto = true;
-			finishedText = false;
-		}
-		if (count > 25 && count < 32) {
-			ShowText ("Bem, ironicamente nossos\n" +
-				"funcionários, pra essa fase,\n" +
-				"já estão mortos, mas é só pra você… \n");
-		}
-		if (count > 32 && count < 34) {
-			apagaTexto = true;
-			finishedText = false;
-		}
-		if (count > 34 && count < 38) {
-			ShowText ("Pegar o “espírito” da coisa\n" +
-				"hehehe.");
-		}
+//		if (count > 16 && count < 18) {
+//			apagaTexto = true;
+//			finishedText = false;
+//		}
+//		if (count > 18 && count < 23) {
+//			ShowText ("É pra isso que você quer o\n" +
+//				"emprego, afinal hehehehe…\n");
+//		}
+//		if (count > 23 && count < 25) {
+//			apagaTexto = true;
+//			finishedText = false;
+//		}
+//		if (count > 25 && count < 32) {
+//			ShowText ("Bem, ironicamente nossos\n" +
+//				"funcionários, pra essa fase,\n" +
+//				"já estão mortos, mas é só pra você… \n");
+//		}
+//		if (count > 32 && count < 34) {
+//			apagaTexto = true;
+//			finishedText = false;
+//		}
+//		if (count > 34 && count < 38) {
+//			ShowText ("Pegar o “espírito” da coisa\n" +
+//				"hehehe.");
+//		}
 
-		if (count > 38) {
-			apagaTexto = true;
-			finishedText = false;
+		if (count > 39) {
+//			apagaTexto = true;
+//			finishedText = false;
 			quest1 = true;
 			startTutorialFinished = false;
+//			playAudioOnce = false;
 
 		}
 	}
@@ -139,60 +149,60 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private void Quest1(){
 
 		if (!up && !down && !left && !right) {
-			ShowText ("Vai... ahn... Até ali pra eu começar\n" +
-				"a te avaliar.\n" +
-				"(Mova Joystick esquerdo pra cima \n" +
-				"pra andar pra frente)");
-			player.GetComponent<PlayerMovement> ().enabled = true;
+//			ShowText ("Vai... ahn... Até ali pra eu começar\n" +
+//				"a te avaliar.\n" +
+//				"(Mova Joystick esquerdo pra cima \n" +
+//				"pra andar pra frente)");
+			//player.GetComponent<PlayerMovement> ().enabled = true;
 
-			if (InputArcade.Eixo (0, EEixo.VERTICAL) > 0 && finishedText == true) {
+			if (InputArcade.Eixo (0, EEixo.VERTICAL) > 0 /*&& finishedText == true*/) {
 				up = true;
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 			}
 		}
 
 
 
 		if (up) {
+			PlayAudio (vampeta [1]);
 			ShowText ("Nãnãnãnão!! Por aí não, você vai sujar todo o salão.\n" +
 				"(Mova Joystick esquerdo pra esquerda para andar para a esquerda)");
 
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) < 0 && finishedText == true) {
 				up = false;
 				left = true;
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 			}
 		}
 
 		if (left) {
+			PlayAudio (vampeta [2]);
 			ShowText ("Ehrm… Se importa em dar a volta pela direita, eu… Sou supersticioso heheh… \n" +
 				"(Mova o Joystick esquerdo pra direita para andar para a direita)");
 
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) > 0 && finishedText == true) {
 				left = false;
 				right = true;
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 			}
 		}
 
 		if (right) {
+			PlayAudio (vampeta [4]);
 			ShowText ("Certo. Agora vira pra cá pra eu registrar sua cara no sistema.\n" +
 				"(Mova Joystick esquerdo pra baixo para andar para trás)");
 
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) < 0 && finishedText == true) {
 				right = false;
 				down = true;
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 				count = 0;
 			}
 		}
 		if (down) {
 			count += Time.deltaTime;
 			if (count < 2) {
+				PlayAudio (vampeta [5]);
 				ShowText ("Perfeito");
 			}
 			if (count > 2 && !doOnce) {
@@ -204,10 +214,10 @@ public class Lv1_Tutorial : MonoBehaviour {
 				ghost.GetComponent<Ghost> ().enabled = false;
 				ghostCreated = true;
 				doOnce = true;
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 
 			}if (count > 3 && count < 6) {
+				PlayAudio (vampeta [6]);
 					ShowText (" … Pegar o espírito da coisa… Entendeu? Heheheh. ");
 			}
 			if (count > 6) {
@@ -216,6 +226,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 				quest1 = false;
 				quest2 = true;
 				count = 0;
+				playAudioOnce = false;
 				player.GetComponent<PlayerMovement> ().enabled = true;
 				ghost.GetComponent<Ghost> ().enabled = true;
 
@@ -226,33 +237,33 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private void Quest2(){
 		count += Time.deltaTime;
 		if (!basicSkill && !bulletSkill && !jumpSkill && !specialSkill) {
+			PlayAudio (vampeta [7]);
 			ShowText ("Ok, aqui diz que você tem… Experiência em decaptação com foice, é isso?\n" +
 				"(Aperte ?? para atacar com a foice)");
 
 			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) > 0 && finishedText == true && isGrounded) {
 				basicSkill = true;
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 			}
 		}
 
 		if (basicSkill) {
 			if (count < 2) {
+				PlayAudio (vampeta [8]);
 				ShowText ("… Muito original.");
 			}
 			if (count > 2 && count < 4) {
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 			}
 			if (count > 4) {
+				PlayAudio (vampeta [8]);
 				ShowText ("Facilidade com magia negra? \n" +
 					"(Aperte ?? para jogar uma esfera de energia)");
 
 				if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0 && finishedText == true && isGrounded) {
 					basicSkill = false;
 					bulletSkill = true;
-					apagaTexto = true;
-					finishedText = false;
+					Reset ();
 					count = 0;
 				}
 			}
@@ -260,21 +271,21 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 		if (bulletSkill) {
 			if (count < 2) {
+				PlayAudio (vampeta [9]);
 				ShowText ("Uuh…  Impressionante…");
 			}
 			if (count > 2 && count < 4) {
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 			}
 			if (count > 4) {
+				PlayAudio (vampeta [10]);
 				ShowText ("Pulo?\n" +
 					"(Aperte ?? pra pular.");
 
 				if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0 && finishedText == true && isGrounded) {
 					bulletSkill = false;
 					jumpSkill = true;
-					apagaTexto = true;
-					finishedText = false;
+					Reset ();
 					count = 0;
 				}
 			}
@@ -285,8 +296,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 				ShowText ("Parece um coelho");
 			}
 			if (count > 2 && count < 4) {
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 			}
 			if (count > 4) {
 				ShowText ("Paredao, estilo BBB\n" +
@@ -296,8 +306,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 					jumpSkill = false;
 					quest2 = false;
 					quest3 = true;
-					apagaTexto = true;
-					finishedText = false;
+					Reset ();
 					count = 0;
 				}
 			}
@@ -312,8 +321,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 			if (airborne) {
 				airborneSkill = true;
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 				count = 0;
 			}
 		}
@@ -322,8 +330,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 				ShowText ("… Mais pra planar do que de fato voar… Todo mundo aumenta os pontos no currículo, de qualquer jeito… ");
 			}
 			if (count > 2 && count < 4) {
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 			}
 			if (count > 4) {
 				ShowText ("Congelar o tempo…? \n" +
@@ -332,8 +339,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 				if (slowedTime) {
 					airborneSkill = false;
 					slowedTimeSkill = true;
-					apagaTexto = true;
-					finishedText = false;
+					Reset ();
 					count = 0;
 				}
 			}
@@ -359,6 +365,14 @@ public class Lv1_Tutorial : MonoBehaviour {
 		}
 	}
 
+
+	private void PlayAudio(AudioClip aud){
+		if (!playAudioOnce) {
+			speaker.clip = aud;
+			speaker.Play ();
+			playAudioOnce = true;
+		}
+	}
 	private void ShowText(string originalText){
 		timePassed += Time.deltaTime;
 
@@ -380,6 +394,12 @@ public class Lv1_Tutorial : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	private void Reset(){
+		apagaTexto = true;
+		finishedText = false;
+		playAudioOnce = false;
 	}
 }
 

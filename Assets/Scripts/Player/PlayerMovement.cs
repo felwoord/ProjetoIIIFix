@@ -409,7 +409,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void AddEnergy(){
-		if (energyBar.fillAmount < 1) {
+		if (energyBar.fillAmount < 0.9f) {
 			if (!slowedTime) {
 				energyBar.fillAmount += 0.1f;
 			} else {

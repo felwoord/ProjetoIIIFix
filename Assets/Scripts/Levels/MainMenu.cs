@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour {
 	private GameObject optionCanvas;
 	private GameObject resetCanvas;
 	private GameObject startTutorialCanvas;
+	private GameObject infosCanvas;
 
 	private GameObject tutorial;
 	private GameObject dI;
@@ -21,6 +22,8 @@ public class MainMenu : MonoBehaviour {
 	private GameObject reset;
 	private GameObject reset2;
 	private GameObject sT;
+
+	private GameObject dicas;
 
 //	private Button tutorialButton;
 	private Button dIButton;
@@ -33,6 +36,8 @@ public class MainMenu : MonoBehaviour {
 //	private Button resetButton;
 //	private Button reset2Button;
 
+	private Button dicasButton;
+
 	private GameObject target;
 
 	private float count = 0;
@@ -44,6 +49,7 @@ public class MainMenu : MonoBehaviour {
 		optionCanvas = GameObject.Find ("OptionCanvas");
 		resetCanvas = GameObject.Find ("ResetCanvas");
 		startTutorialCanvas = GameObject.Find ("StartTutorialCanvas");
+		infosCanvas = GameObject.Find ("InfosCanvas");
 	
 
 		reset = GameObject.Find ("ResetButton");
@@ -55,6 +61,7 @@ public class MainMenu : MonoBehaviour {
 		pT = GameObject.Find ("PT");
 		sF = GameObject.Find ("SF");
 		sT = GameObject.Find ("StartTutorialButton");
+		dicas = GameObject.Find ("DicasButton");
 
 //		resetButton = GameObject.Find ("ResetButton").GetComponent<Button> ();
 //		reset2Button = GameObject.Find ("ResetButton2").GetComponent<Button> ();
@@ -65,10 +72,9 @@ public class MainMenu : MonoBehaviour {
 		pTButton = pT.GetComponent<Button> ();
 		sFButton = sF.GetComponent<Button> ();
 //		sTButton = sT.GetComponent<Button> ();
+//		dicasButton = dicas.GetComponent<Button> ();
 
 		dIButton.interactable = true;
-
-
 
 		CheckLevelOpen ();
 
@@ -85,13 +91,15 @@ public class MainMenu : MonoBehaviour {
 			target = optionCanvas;
 		} else if (EventSystem.current.currentSelectedGameObject.tag == "ResetButtons") {
 			target = resetCanvas;
-		} else if(EventSystem.current.currentSelectedGameObject.tag == "StartTutorialButton"){
+		} else if (EventSystem.current.currentSelectedGameObject.tag == "InfosButtons") {
+			target = infosCanvas;
+		} else if (EventSystem.current.currentSelectedGameObject.tag == "StartTutorialButton") {
 			target = startTutorialCanvas;
 			count += Time.deltaTime;
 			if (count > 10) {
 				SceneManager.LoadScene ("1Tutorial");
 			}
-		}else{
+		} else {
 		}
 
 
@@ -103,12 +111,12 @@ public class MainMenu : MonoBehaviour {
 
 	public void CheckLevelOpen(){
 
-		int dIopen = PlayerPrefs.GetInt ("2DIopen");
-		if (dIopen == 1) {
-			dIButton.interactable = true;
-		} else {
-			dIButton.interactable = false;
-		}
+//		int dIopen = PlayerPrefs.GetInt ("2DIopen");
+//		if (dIopen == 1) {
+//			dIButton.interactable = true;
+//		} else {
+//			dIButton.interactable = false;
+//		}
 
 		int tPopen = PlayerPrefs.GetInt ("3TPopen");
 		if (tPopen == 1) {
@@ -172,6 +180,10 @@ public class MainMenu : MonoBehaviour {
 	}
 	public void OptionsButton(){
 		EventSystem.current.GetComponent<EventSystem> ().SetSelectedGameObject (reset);
+	}
+		
+	public void InfoButton(){
+		EventSystem.current.GetComponent<EventSystem> ().SetSelectedGameObject (dicas);
 	}
 
 	public void ResetButton(){
