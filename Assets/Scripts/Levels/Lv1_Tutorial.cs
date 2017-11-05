@@ -10,7 +10,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 	private GameObject player;
 
-	private float textSpeed = 0.16f;
+	//private float textSpeed = 0.16f;
 	private float timePassed = 0;
 	private int textPosition = 0;
 	private bool apagaTexto = false;
@@ -99,16 +99,16 @@ public class Lv1_Tutorial : MonoBehaviour {
 		if (count < 18) {
 			PlayAudio (vampeta [0]);
 			ShowText ("Gh...Ghrriiim? Gh… Que seja, seu nome não é importante! Você quer a vaga de Anjo da Morte?... " +
-			"Eehhr vamos lá. Nessa seleção você vai ter que ahn… Matar. É óbvio. É pra isso que você quer o emprego, afinal");
+			"Eehhr vamos lá. Nessa seleção você vai ter que ahn… Matar. É óbvio. É pra isso que você quer o emprego, afinal", 0.16f);
 		}
 		if (count > 18 && count < 19) {
 			apagaTexto = true;
 			finishedText = false;
 		}
-		if (count > 19 && count < 39) {
-			ShowText ("Ironicamente nossos funcionários pra essa fase já estão mortos, mas é só você… Pegar o “espírito” da coisa heheh. \n" +
+		if (count > 19 && count < 29) {
+			ShowText ("Ironicamente nossos funcionários pra essa fase já estão mortos, mas é só você… Pegar o “espírito” da coisa hehehehe. \n" +
 			"Vai ahn… Até ali pra eu começar a te avaliar.\n" +
-			"(Imagem Manete) para andar pra frente");
+			"(Imagem Manete) para andar pra frente", 0.1f);
 		}
 //		if (count > 16 && count < 18) {
 //			apagaTexto = true;
@@ -136,7 +136,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 //				"hehehe.");
 //		}
 
-		if (count > 39) {
+		if (count > 29) {
 //			apagaTexto = true;
 //			finishedText = false;
 			quest1 = true;
@@ -166,7 +166,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 		if (up) {
 			PlayAudio (vampeta [1]);
 			ShowText ("Nãnãnãnão!! Por aí não, você vai sujar todo o salão.\n" +
-				"(Mova Joystick esquerdo pra esquerda para andar para a esquerda)");
+				"(Mova Joystick esquerdo pra esquerda para andar para a esquerda)", 0.07f);
 
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) < 0 && finishedText == true) {
 				up = false;
@@ -178,7 +178,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 		if (left) {
 			PlayAudio (vampeta [2]);
 			ShowText ("Ehrm… Se importa em dar a volta pela direita, eu… Sou supersticioso heheh… \n" +
-				"(Mova o Joystick esquerdo pra direita para andar para a direita)");
+				"(Mova o Joystick esquerdo pra direita para andar para a direita)", 0.1f);
 
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) > 0 && finishedText == true) {
 				left = false;
@@ -188,9 +188,9 @@ public class Lv1_Tutorial : MonoBehaviour {
 		}
 
 		if (right) {
-			PlayAudio (vampeta [4]);
-			ShowText ("Certo. Agora vira pra cá pra eu registrar sua cara no sistema.\n" +
-				"(Mova Joystick esquerdo pra baixo para andar para trás)");
+			PlayAudio (vampeta [3]);
+			ShowText ("Tá, certo. Agora vira pra cá pra eu registrar sua cara no sistema.\n" +
+				"(Mova Joystick esquerdo pra baixo para andar para trás)", 0.1f);
 
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) < 0 && finishedText == true) {
 				right = false;
@@ -202,8 +202,8 @@ public class Lv1_Tutorial : MonoBehaviour {
 		if (down) {
 			count += Time.deltaTime;
 			if (count < 2) {
-				PlayAudio (vampeta [5]);
-				ShowText ("Perfeito");
+				PlayAudio (vampeta [4]);
+				ShowText ("Perfeito", 0.1f);
 			}
 			if (count > 2 && !doOnce) {
 				player.GetComponent<PlayerMovement> ().enabled = false;
@@ -217,10 +217,10 @@ public class Lv1_Tutorial : MonoBehaviour {
 				Reset ();
 
 			}if (count > 3 && count < 6) {
-				PlayAudio (vampeta [6]);
-					ShowText (" … Pegar o espírito da coisa… Entendeu? Heheheh. ");
+				PlayAudio (vampeta [5]);
+				ShowText (" … Pegar o espírito da coisa… Entendeu? Heheheh. ", 0.1f);
 			}
-			if (count > 6) {
+			if (count > 9) {
 				apagaTexto = true;
 				finishedText = false;
 				quest1 = false;
@@ -237,9 +237,9 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private void Quest2(){
 		count += Time.deltaTime;
 		if (!basicSkill && !bulletSkill && !jumpSkill && !specialSkill) {
-			PlayAudio (vampeta [7]);
-			ShowText ("Ok, aqui diz que você tem… Experiência em decaptação com foice, é isso?\n" +
-				"(Aperte ?? para atacar com a foice)");
+			PlayAudio (vampeta [6]);
+			ShowText ("Ok, aqui você tem… Experiência em decaptação com foice, é isso?\n" +
+				"(Aperte ?? para atacar com a foice)", 0.1f);
 
 			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) > 0 && finishedText == true && isGrounded) {
 				basicSkill = true;
@@ -249,8 +249,8 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 		if (basicSkill) {
 			if (count < 2) {
-				PlayAudio (vampeta [8]);
-				ShowText ("… Muito original.");
+				PlayAudio (vampeta [7]);
+				ShowText ("… Muito original.", 0.1f); //corrigir, nao saiu audio (talvez muito rapido);
 			}
 			if (count > 2 && count < 4) {
 				Reset ();
@@ -258,7 +258,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 			if (count > 4) {
 				PlayAudio (vampeta [8]);
 				ShowText ("Facilidade com magia negra? \n" +
-					"(Aperte ?? para jogar uma esfera de energia)");
+					"(Aperte ?? para jogar uma esfera de energia)", 0.06f);
 
 				if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0 && finishedText == true && isGrounded) {
 					basicSkill = false;
@@ -272,17 +272,17 @@ public class Lv1_Tutorial : MonoBehaviour {
 		if (bulletSkill) {
 			if (count < 2) {
 				PlayAudio (vampeta [9]);
-				ShowText ("Uuh…  Impressionante…");
+				ShowText ("Uuh…  Impressionante…", 0.1f);
 			}
 			if (count > 2 && count < 4) {
 				Reset ();
 			}
 			if (count > 4) {
 				PlayAudio (vampeta [10]);
-				ShowText ("Pulo?\n" +
-					"(Aperte ?? pra pular.");
+				ShowText ("Pu...Pulo? Hãã, quem coloca no currículo que sabe pular?!\n" +
+					"(Aperte ?? pra pular.)", 0.1f);
 
-				if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0 && finishedText == true && isGrounded) {
+				if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0 && finishedText == true /*&& isGrounded*/) {
 					bulletSkill = false;
 					jumpSkill = true;
 					Reset ();
@@ -293,14 +293,13 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 		if (jumpSkill) {
 			if (count < 2) {
-				ShowText ("Parece um coelho");
-			}
-			if (count > 2 && count < 4) {
 				Reset ();
 			}
-			if (count > 4) {
-				ShowText ("Paredao, estilo BBB\n" +
-					"(Aperte ?? criar uma parede.");
+			if (count > 2) {
+				PlayAudio (vampeta [14]);
+				ShowText ("“Conjuração de auto entidade profana ascendente do plano“...? Isso é um tipo formal de falar “Tipo um lance do mal que sai do chão”?\n" +
+					"(Aperte -- para criar a barreira.)"
+					, 0.1f);
 
 				if (InputArcade.Eixo (1, EEixo.VERTICAL) < 0 && finishedText == true && isGrounded) {
 					jumpSkill = false;
@@ -316,8 +315,9 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private void Quest3(){
 		count += Time.deltaTime;
 		if (!airborneSkill && !slowedTimeSkill) {
+			PlayAudio (vampeta [11]);
 			ShowText ("Vôo intermediário?\n" +
-				"(Aperte ?? durante o pulo para planar. Você ganha habilidades diferentes enquanto está no ar.)\n");
+				"(Aperte ?? durante o pulo para planar. Você ganha habilidades diferentes enquanto está no ar.)", 0.06f);
 
 			if (airborne) {
 				airborneSkill = true;
@@ -327,14 +327,16 @@ public class Lv1_Tutorial : MonoBehaviour {
 		}
 		if (airborneSkill) {
 			if (count < 2) {
-				ShowText ("… Mais pra planar do que de fato voar… Todo mundo aumenta os pontos no currículo, de qualquer jeito… ");
+				PlayAudio (vampeta [12]);
+				ShowText ("… Mais pra planar do que de fato voar… Todo mundo aumenta os pontos no currículo, de qualquer jeito… ", 0.1f);
 			}
 			if (count > 2 && count < 4) {
 				Reset ();
 			}
 			if (count > 4) {
+				//PlayAudio (vampeta [12]);
 				ShowText ("Congelar o tempo…? \n" +
-				"(Aperte ?? para desacelerar o tempo)");
+					"(Aperte ?? para desacelerar o tempo)", 0.1f);
 
 				if (slowedTime) {
 					airborneSkill = false;
@@ -345,7 +347,16 @@ public class Lv1_Tutorial : MonoBehaviour {
 			}
 		}
 		if (slowedTimeSkill) {
-			ShowText ("Eu devia ter percebido alguma coisa? Quer dizer, o tempo congelou pra você, não pra mim. Que seja, isso é o bastante. vamos para a segunda etapa.");
+			PlayAudio (vampeta [13]);
+			ShowText ("Eu devia ter percebido alguma coisa? Quer dizer, o tempo congelou pra você, não pra mim. ", 0.1f);
+			if (count > 10) {
+				PlayAudio (vampeta [15]);
+				ShowText ("Teletransporte.", 0.1f);
+			}
+			if (count > 15) {
+				PlayAudio (vampeta [16]);
+				ShowText ("Parece que alguém não vai ter desculpa pra chegar atrasado.", 0.1f);
+			}
 			if (count > 10) {
 //				PlayerPrefs.SetInt ("2DIopen", 1);
 //				PlayerPrefs.Save ();
@@ -359,10 +370,14 @@ public class Lv1_Tutorial : MonoBehaviour {
 		float ghostCount;
 		ghostCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 		if (ghostCount == 0) {
-			ghost = Instantiate (Resources.Load ("Ghost")) as GameObject;
-			ghost.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z + 30);
-			ghost.name = "Ghost";
+			Invoke ("CreateGhost", 2.0f);
 		}
+	}
+
+	private void CreateGhost(){
+		ghost = Instantiate (Resources.Load ("Ghost")) as GameObject;
+		ghost.transform.position = new Vector3 (player.transform.position.x + Random.Range (-15,15), player.transform.position.y, player.transform.position.z + 30);
+		ghost.name = "Ghost";
 	}
 
 
@@ -373,7 +388,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 			playAudioOnce = true;
 		}
 	}
-	private void ShowText(string originalText){
+	private void ShowText(string originalText, float textSpeed){
 		timePassed += Time.deltaTime;
 
 		if (!finishedText) {

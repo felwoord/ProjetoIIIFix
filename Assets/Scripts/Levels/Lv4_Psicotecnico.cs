@@ -24,11 +24,17 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 	private GameObject[] juan = new GameObject[2];
 	private GameObject[] ghost = new GameObject[5];
 
+	public AudioClip[] vampeta = new AudioClip[2];
+	private AudioSource speaker;
+	private bool playAudioOnce = false;
+
 	// Use this for initialization
 	void Start () {
 		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
 		guideText = GetComponent<Text> ();
 		guideText.text = "";
+
+		speaker = GameObject.Find ("Speaker").GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -36,26 +42,31 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 		if (InputArcade.Apertou (0, EControle.PRETO) || InputArcade.Apertou (1, EControle.PRETO)) {
 			SceneManager.LoadScene ("Menu");
 		}
+		if(Input.GetKeyDown(KeyCode.Keypad9) || InputArcade.Apertou(0,EControle.BRANCO)){
+			GameObject kill = GameObject.FindWithTag ("Enemy");
+			Destroy (kill);
+		}
 
 		count += Time.deltaTime;
-		if (count < 15){
-			ShowText ("Esses são os supervisores gerais e… Mais alguns atrasados. Quê? O trânsito aqui é… Hhhhahahhah um inferno~");
+		if (count < 9){
+			PlayAudio (vampeta [0]);
+			ShowText ("Esses são os supervisores gerais e… Mais alguns atrasados. Quê? O trânsito aqui é… Hahahaha um inferno", 0.07f);
 		}
-		if (count > 15 && count < 17) {
+		if (count > 9 && count < 10) {
 			if (!doOnce) {
 				textBox.enabled = false;
 				guideText.text = "";
-				apagaTexto = true;
-				finishedText = false;
+				Reset ();
 				SpawnEnemies ();
 				doOnce = true;
 			}
 
-		}if (count > 17) {
+		}if (count > 10) {
 			int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 			if (enemyCount == 0) {
 				textBox.enabled = true;
-				ShowText ("Aaaaaargh. Ok, vamos fazer uma seletiva final pra decidir logo com quem vamos ficar, antes que você mate o departamento inteiro.");
+				PlayAudio (vampeta [1]);
+				ShowText ("Aaaaaargh. Ok, vamos fazer uma seletiva final pra decidir logo com quem vamos ficar, antes que você mate o departamento inteiro.", 0.06f);
 				count2 += Time.deltaTime;
 				if (count2 > 9) {
 					PlayerPrefs.SetInt ("5SFopen", 1);
@@ -112,7 +123,21 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 	}
 
 
-	private void ShowText(string originalText){
+	private void PlayAudio(AudioClip aud){
+		if (!playAudioOnce) {
+			speaker.clip = aud;
+			speaker.Play ();
+			playAudioOnce = true;
+		}
+	}
+
+	private void Reset(){
+		apagaTexto = true;
+		finishedText = false;
+		playAudioOnce = false;
+	}
+
+	private void ShowText(string originalText, float textSpeed){
 		timePassed += Time.deltaTime;
 
 		if (!finishedText) {

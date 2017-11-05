@@ -43,14 +43,15 @@ public class Turret : MonoBehaviour {
 
 	void Shot(){
 		GameObject bullet = Instantiate(Resources.Load("EnemyBullet")) as GameObject;
-		bullet.transform.position = transform.position;
-		bullet.transform.position = new Vector3 (transform.position.x + shotDirection.x * 5, transform.position.y, transform.position.z + shotDirection.z * 5);
+		//bullet.transform.position = transform.position;
+		bullet.transform.position = new Vector3 (transform.position.x + shotDirection.x * 5, 1.5f, transform.position.z + shotDirection.z * 5);
 		bullet.GetComponent<Rigidbody> ().velocity = shotDirection * 500;
 	}
 
 	void CheckPosition(){
 		newPos.x = player.transform.position.x;
-		newPos.y = transform.position.y;
+		//newPos.y = transform.position.y;
+		newPos.y = 1.5f;
 		newPos.z = player.transform.position.z;
 
 	}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ArcadePUCCampinas;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
 	public float movSpeed;
@@ -265,7 +266,7 @@ public class PlayerMovement : MonoBehaviour {
 				Jump ();
 			}
 			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0) {
-				if (energyBar.fillAmount >= 0.99f) {
+				if (energyBar.fillAmount >= 0.6f) {
 					ShotAttack ();
 				}
 			}
@@ -334,12 +335,12 @@ public class PlayerMovement : MonoBehaviour {
 			GameObject bullet = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
 			bullet.transform.position = new Vector3 (transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
 			bullet.GetComponent<Rigidbody> ().velocity = playerDirection * 100;
-			energyBar.fillAmount -= 0.99f;
+			energyBar.fillAmount -= 0.6f;
 		} else if (!isGrounded && airborne) {
 			GameObject bullet = Instantiate (Resources.Load ("BulletSkill")) as GameObject;
 			bullet.transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 			bullet.GetComponent<Rigidbody> ().velocity = new Vector3 (playerDirection.x * 100, playerDirection.y - 25, playerDirection.z * 100);
-			energyBar.fillAmount -= 0.99f;
+			energyBar.fillAmount -= 0.6f;
 			rb.constraints = ~RigidbodyConstraints.FreezePosition;
 			airborne = false;
 		} else if (!isGrounded && !airborne) {
@@ -391,6 +392,10 @@ public class PlayerMovement : MonoBehaviour {
 
 
 			Invoke ("ChangeToBlack", 0.08f);
+
+			if (healthBar.fillAmount <= 0) {
+				SceneManager.LoadScene ("Menu");
+			}
 
 		}
 

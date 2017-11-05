@@ -9,7 +9,7 @@ public class Lv3_TestePratico : MonoBehaviour {
 	private Text guideText;
 	private Image textBox;
 
-	private float textSpeed = 0.1f;
+//	private float textSpeed = 0.1f;
 	private float timePassed = 0;
 	private int textPosition = 0;
 	private bool apagaTexto = false;
@@ -23,10 +23,16 @@ public class Lv3_TestePratico : MonoBehaviour {
 	private GameObject[] juan = new GameObject[4];
 	private GameObject[] ghost = new GameObject[5];
 
+	public AudioClip[] vampeta = new AudioClip[2];
+	private AudioSource speaker;
+	private bool playAudioOnce = false;
+
 	void Start () {
 		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
 		guideText = GetComponent<Text> ();
 		guideText.text = "";
+
+		speaker = GameObject.Find ("Speaker").GetComponent<AudioSource> ();
 		
 	}
 	
@@ -35,30 +41,31 @@ public class Lv3_TestePratico : MonoBehaviour {
 		if (InputArcade.Apertou (0, EControle.PRETO) || InputArcade.Apertou (1, EControle.PRETO)) {
 			SceneManager.LoadScene ("Menu");
 		}
-		if(Input.GetKeyDown(KeyCode.Keypad9)){
-			for (int i = 0; i <= 8; i++) {
-				Destroy (juan [i]);
-			}
+		if(Input.GetKeyDown(KeyCode.Keypad9) || InputArcade.Apertou(0,EControle.BRANCO)){
+			GameObject kill = GameObject.FindWithTag ("Enemy");
+			Destroy (kill);
 		}
+
 		count += Time.deltaTime;
-		if (count < 15){
-		ShowText ("Agora, ah… Precisamos cortar alguns funcionários júnior. Não necessariamente cortar, você pode ser criativo aí hhhhhahah. ");
+		if (count < 12){
+			PlayAudio (vampeta [0]);
+			ShowText ("Agora, ah… Precisamos cortar alguns funcionários júnior. Não necessariamente cortar, você pode ser criativo aí hahahaha. ", 0.07f);
 		}
-		if (count > 15 && count < 17) {
+		if (count > 12 && count < 13) {
 			if (!doOnce) {
-				apagaTexto = true;
 				guideText.text = "";
-				finishedText = false;
+				Reset ();
 				textBox.enabled = false;
 				SpawnEnemies ();
 				doOnce = true;
 			}
 
-		}if (count > 17) {
+		}if (count > 13) {
 			int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 			if (enemyCount == 0) {
 				textBox.enabled = true;
-				ShowText ("Ah? Você ainda tá vivo?... Aaah… Próxima fase.");
+				PlayAudio (vampeta [1]);
+				ShowText ("Ah? Você ainda tá vivo?... Aaah… Próxima fase.",0.06f);
 				count2 += Time.deltaTime;
 				if (count2 > 5) {
 					PlayerPrefs.SetInt ("4PTopen", 1);
@@ -108,7 +115,21 @@ public class Lv3_TestePratico : MonoBehaviour {
 		ghost [4].name = "Ghost";
 	}
 
-	private void ShowText(string originalText){
+	private void PlayAudio(AudioClip aud){
+		if (!playAudioOnce) {
+			speaker.clip = aud;
+			speaker.Play ();
+			playAudioOnce = true;
+		}
+	}
+
+	private void Reset(){
+		apagaTexto = true;
+		finishedText = false;
+		playAudioOnce = false;
+	}
+
+	private void ShowText(string originalText, float textSpeed){
 		timePassed += Time.deltaTime;
 
 		if (!finishedText) {

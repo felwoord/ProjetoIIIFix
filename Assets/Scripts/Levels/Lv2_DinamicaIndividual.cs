@@ -12,7 +12,7 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 	private Image textBox;
 	private Text guideText;
 
-	private float textSpeed = 0.1f;
+	//private float textSpeed = 0.1f;
 	private float timePassed = 0;
 	private int textPosition = 0;
 	private bool apagaTexto = false;
@@ -31,6 +31,10 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 
 	private GameObject[] ghost = new GameObject[9];
 
+	public AudioClip[] vampeta = new AudioClip[3];
+	private AudioSource speaker;
+	private bool playAudioOnce = false;
+
 
 
 	// Use this for initialization
@@ -46,6 +50,8 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 		transparent = blackFlash.color;
 		transparent.a = 0f;
 
+		speaker = GameObject.Find ("Speaker").GetComponent<AudioSource> ();
+
 
 
 	}
@@ -54,6 +60,11 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 	void Update () {
 		if (InputArcade.Apertou (0, EControle.PRETO) || InputArcade.Apertou (1, EControle.PRETO)) {
 			SceneManager.LoadScene ("Menu");
+		}
+
+		if(Input.GetKeyDown(KeyCode.Keypad9) || InputArcade.Apertou(0,EControle.BRANCO)){
+			GameObject kill = GameObject.FindWithTag ("Enemy");
+			Destroy (kill);
 		}
 
 		if (!destroyed) {
@@ -83,30 +94,30 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 
 	private void StartLv2(){
 		count += Time.deltaTime;
-		if (count < 15) {
-			ShowText ("Surpreso, ah? Sim, é a mesma sala. Não temos verba pra ficar esbanjando, então vamos logo. Estagiários, ataquem!!");
+		if (count < 11) {
+			PlayAudio (vampeta [0]);
+			ShowText ("Surpreso? É, é a mesma sala. Não, a gente não tem verba pra ficar esbanjando, então vamo logo com isso. Estagiários, ataquem!!", 0.075f);
 		}
-		if (count > 15  && count < 17) {
-			apagaTexto = true;
-			finishedText = false;
+		if (count > 11  && count < 12) {
+			Reset ();
 			if (!doOnce) {
 				SpawnEnemies ();
 				doOnce = true;
 			}
 
 		}
-		if (count > 17 && count < 32) {
-			ShowText ("Um, dois, três, quatro… Pera, cadê o resto?... Aah, que seja, os que chegarem atrasados que dêem um jeito de tentar te matar como der.");
+		if (count > 12 && count < 23) {
+			PlayAudio (vampeta [1]);
+			ShowText ("Um, dois, três, quatro… Pera, cadê o resto?... Aah, que seja, os que chegarem atrasados que dêem um jeito de te matar.", 0.07f);
 		}
-		if (count > 32) {
+		if (count > 23) {
 			for (int i = 0; i <= 8; i++) {
 				ghost[i].GetComponent<Ghost> ().enabled = true;
 			}
 			player.GetComponent<PlayerMovement> ().enabled = true;
 			textBox.enabled = false;
 			guideText.text = "";
-			apagaTexto = true;
-			finishedText = false;
+			Reset ();
 			quest1 = true;
 			startLv2 = false;
 		}
@@ -116,9 +127,10 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 		int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 		if (enemyCount == 0) {
 			textBox.enabled = true;
-			ShowText ("Ergh, a empresa precisava mesmo cortar gastos. Foice. Cortar. Hhhhhheheheh. PRÓXIMA ETAPA.");
+			PlayAudio (vampeta [2]);
+			ShowText ("Ergh, a empresa precisava mesmo cortar gastos. \nFoice. \nCortar. \nHeheheheheh. \nPRÓXIMA ETAPA.", 0.08f);
 			count2 += Time.deltaTime;
-			if (count2 > 12) {
+			if (count2 > 10) {
 				PlayerPrefs.SetInt ("3TPopen", 1);
 				PlayerPrefs.Save ();
 				SceneManager.LoadScene ("3TP");
@@ -148,9 +160,21 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 
 	}
 
+	private void PlayAudio(AudioClip aud){
+		if (!playAudioOnce) {
+			speaker.clip = aud;
+			speaker.Play ();
+			playAudioOnce = true;
+		}
+	}
 
+	private void Reset(){
+		apagaTexto = true;
+		finishedText = false;
+		playAudioOnce = false;
+	}
 
-	private void ShowText(string originalText){
+	private void ShowText(string originalText, float textSpeed){
 		timePassed += Time.deltaTime;
 
 		if (!finishedText) {

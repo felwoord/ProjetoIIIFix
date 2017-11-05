@@ -29,11 +29,17 @@ public class Encostus : MonoBehaviour {
 			Invoke ("DeactiveParticle", 1f);
 		}
 		life--;
-
-		if (life == 0) {
+		if (life <= 0) {
+			GameObject turret = GameObject.Find ("Turret");
+			Destroy (turret);
+			GameObject turret1 = GameObject.Find ("Turret1");
+			Destroy (turret1);
+			GameObject turret2 = GameObject.Find ("Turret2");
+			Destroy (turret2);
+			GameObject turret3 = GameObject.Find ("Turret3");
+			Destroy (turret3);
 			Destroy (gameObject);
 		}
-
 	}
 
 	private void ActiveParticle(){

@@ -10,7 +10,7 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 	private Text guideText;
 	private Image textBox;
 
-	private float textSpeed = 0.1f;
+	//private float textSpeed = 0.1f;
 	private float timePassed = 0;
 	private int textPosition = 0;
 	private bool apagaTexto = false;
@@ -23,6 +23,12 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 
 	private GameObject encostus;
 
+	public AudioClip[] vampeta = new AudioClip[3];
+	private AudioSource speaker;
+	private bool playAudioOnce = false;
+
+	private bool finished = false;
+
 	// Use this for initialization
 	void Start () {
 		textBox = GameObject.Find ("TextBox").GetComponent<Image> ();
@@ -30,6 +36,10 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 		guideText.text = "";
 		encostus = GameObject.Find ("Encostus");
 		encostus.GetComponent<Encostus> ().enabled = false;
+
+		speaker = GameObject.Find ("Speaker").GetComponent<AudioSource> ();
+
+
 	}
 	
 	// Update is called once per frame
@@ -37,33 +47,49 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 		if (InputArcade.Apertou (0, EControle.PRETO) || InputArcade.Apertou (1, EControle.PRETO)) {
 			SceneManager.LoadScene ("Menu");
 		}
+		if(Input.GetKeyDown(KeyCode.Keypad9) || InputArcade.Apertado(0,EControle.BRANCO)){
+			GameObject kill = GameObject.FindWithTag ("Enemy");
+			Destroy (kill);
+		}
 
 		count += Time.deltaTime;
-		if (count < 15){
-			ShowText ("Esse é Encostus. Ele tem indicação de alguém que você não matou, então é normal que a gente fique mais pro lado dele. Boa sorte.");
-		}
-		if (count > 15 && count < 17) {
-			if (!doOnce) {
-				textBox.enabled = false;
-				guideText.text = "";
-				apagaTexto = true;
-				finishedText = false;
-				SpawnEnemies ();
-				doOnce = true;
+		if (!finished) {
+			if (count < 13) {
+				PlayAudio (vampeta [0]);
+				ShowText ("Bom, esse é Encostus. Ele tem indicação de alguém que você não matou aqui, e, bom, assim é normal que a gente queira ficar mais pro lado dele. Boa sorte.", 0.06f);
 			}
+			if (count > 13 && count < 14) {
+				if (!doOnce) {
+					textBox.enabled = false;
+					guideText.text = "";
+					Reset ();
+					SpawnEnemies ();
+					doOnce = true;
+				}
 
-		}if (count > 17) {
-			int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
-			if (enemyCount == 0) {
-				textBox.enabled = true;
-				ShowText ("Aaahcabou. A vaga é sua, parabéns. Passa no RH pra pegar a relação de documentos e começa na próxima segunda. Obrigado.");
-				count2 += Time.deltaTime;
-				if (count2 > 5) {
-					SceneManager.LoadScene ("Menu");
+			}
+			if (count > 14) {
+				int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+				if (enemyCount == 0) {
+					textBox.enabled = true;
+					PlayAudio (vampeta [1]);
+					ShowText ("Aaahcabou. A vaga é sua, parabéns. Passa no RH pra gente pegar a relação de documentos,e você começa na próxima segunda.", 0.07f);
+					count2 += Time.deltaTime;
+					if (count2 > 15 && count2 < 16) {
+						Reset ();
+						count = 0;
+						finished = true;
+					}
 				}
 			}
-
-		
+		} else {
+			if (count > 10) {
+				PlayAudio (vampeta [2]);
+				ShowText ("Tava esperando o que? Cena de créditos e agradecimentos? Não, seu inferno vai começar agora!", 0.08f);
+			}
+			if (count > 20) {
+				SceneManager.LoadScene ("Menu");
+			}
 		}
 		
 	}
@@ -74,8 +100,22 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 		encostus.GetComponent<Encostus> ().enabled = true;
 	}
 
+	private void PlayAudio(AudioClip aud){
+		if (!playAudioOnce) {
+			speaker.clip = aud;
+			speaker.Play ();
+			playAudioOnce = true;
+		}
+	}
 
-	private void ShowText(string originalText){
+	private void Reset(){
+		apagaTexto = true;
+		finishedText = false;
+		playAudioOnce = false;
+	}
+
+
+	private void ShowText(string originalText, float textSpeed){
 		timePassed += Time.deltaTime;
 
 		if (!finishedText) {
