@@ -42,6 +42,8 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private Image joystick;
 	private float countImg = 0;
 
+	private bool doOnceGhost = false;
+
 
 	void Start () {
 		joystick = GameObject.Find ("Joystick").GetComponent<Image> ();
@@ -252,7 +254,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 				player.GetComponent<PlayerMovement> ().enabled = false;
 //				fazer algum efeito enquanto o ghost aparece
 				ghost = Instantiate (Resources.Load ("Ghost")) as GameObject;
-				ghost.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z + 30);
+				ghost.transform.position = new Vector3 (player.transform.position.x, 6.8f, player.transform.position.z + 30);
 				ghost.name = "Ghost";
 				ghost.GetComponent<Ghost> ().enabled = false;
 				ghostCreated = true;
@@ -470,14 +472,18 @@ public class Lv1_Tutorial : MonoBehaviour {
 		float ghostCount;
 		ghostCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
 		if (ghostCount == 0) {
-			Invoke ("CreateGhost", 2.0f);
+			if (!doOnceGhost) {
+				Invoke ("CreateGhost", 2.0f);
+				doOnceGhost = true;
+			}
 		}
 	}
 
 	private void CreateGhost(){
 		ghost = Instantiate (Resources.Load ("Ghost")) as GameObject;
-		ghost.transform.position = new Vector3 (player.transform.position.x + Random.Range (-15,15), player.transform.position.y, player.transform.position.z + 30);
+		ghost.transform.position = new Vector3 (player.transform.position.x + Random.Range (-15,15), 6.8f, player.transform.position.z + 30);
 		ghost.name = "Ghost";
+		doOnceGhost = false;
 	}
 
 
