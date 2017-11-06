@@ -98,8 +98,8 @@ public class Lv1_Tutorial : MonoBehaviour {
 		player.name = "Player";
 		//player.GetComponent<PlayerMovement> ().enabled = false;
 
-		//startTutorialFinished = true;
-		quest3 = true;
+		startTutorialFinished = true;
+		//quest3 = true;
 		count = 0;
 		playerCreated = true;
 	}
