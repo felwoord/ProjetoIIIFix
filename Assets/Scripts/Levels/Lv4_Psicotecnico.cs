@@ -9,7 +9,7 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 	private Text guideText;
 	private Image textBox;
 
-	private float textSpeed = 0.1f;
+//	private float textSpeed = 0.1f;
 	private float timePassed = 0;
 	private int textPosition = 0;
 	private bool apagaTexto = false;

@@ -104,8 +104,12 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void EnergyBarInter(){
-		if (energyBar.fillAmount < 1 && !airborne && !slowedTime) {
-			energyBar.fillAmount += Time.deltaTime / 50;
+		if (SceneManager.GetActiveScene ().name == "1Tutorial") {
+			energyBar.fillAmount += Time.deltaTime / 5;
+		} else {
+			if (energyBar.fillAmount < 1 && !airborne && !slowedTime) {
+				energyBar.fillAmount += Time.deltaTime / 50;
+			}
 		}
 		if (airborne) {
 			energyBar.fillAmount -= Time.deltaTime / 5;
@@ -393,8 +397,10 @@ public class PlayerMovement : MonoBehaviour {
 
 			Invoke ("ChangeToBlack", 0.08f);
 
-			if (healthBar.fillAmount <= 0) {
-				SceneManager.LoadScene ("Menu");
+			if(SceneManager.GetActiveScene ().name != "1Tutorial"){
+				if (healthBar.fillAmount <= 0) {
+					SceneManager.LoadScene ("Menu");
+				}
 			}
 
 		}

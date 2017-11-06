@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour {
 	private GameObject sT;
 
 	private GameObject dicas;
+	private GameObject infos;
 
 //	private Button tutorialButton;
 	private Button dIButton;
@@ -62,6 +63,7 @@ public class MainMenu : MonoBehaviour {
 		sF = GameObject.Find ("SF");
 		sT = GameObject.Find ("StartTutorialButton");
 		dicas = GameObject.Find ("DicasButton");
+		infos = GameObject.Find ("InfosButton");
 
 //		resetButton = GameObject.Find ("ResetButton").GetComponent<Button> ();
 //		reset2Button = GameObject.Find ("ResetButton2").GetComponent<Button> ();
@@ -188,6 +190,9 @@ public class MainMenu : MonoBehaviour {
 
 	public void ResetButton(){
 		EventSystem.current.GetComponent<EventSystem> ().SetSelectedGameObject (reset2);
+	}
+	public void DicasButton(){
+		EventSystem.current.GetComponent<EventSystem> ().SetSelectedGameObject (infos);
 	}
 
 }

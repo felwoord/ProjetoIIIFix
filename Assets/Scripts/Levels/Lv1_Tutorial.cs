@@ -38,7 +38,15 @@ public class Lv1_Tutorial : MonoBehaviour {
 	public AudioClip[] fantasma = new AudioClip[3];
 	private bool playAudioOnce = false;
 
+	public Sprite frente, tras, esquerdo, direito, meio, botaoAzul;
+	private Image joystick;
+	private float countImg = 0;
+
+
 	void Start () {
+		joystick = GameObject.Find ("Joystick").GetComponent<Image> ();
+		joystick.enabled = false;
+
 		guideText = GetComponent<Text> ();
 		guideText.text = "";
 
@@ -90,7 +98,8 @@ public class Lv1_Tutorial : MonoBehaviour {
 		player.name = "Player";
 		//player.GetComponent<PlayerMovement> ().enabled = false;
 
-		startTutorialFinished = true;
+		//startTutorialFinished = true;
+		quest3 = true;
 		count = 0;
 		playerCreated = true;
 	}
@@ -105,10 +114,14 @@ public class Lv1_Tutorial : MonoBehaviour {
 			apagaTexto = true;
 			finishedText = false;
 		}
-		if (count > 19 && count < 29) {
+		if (count > 19 && count < 30) {
 			ShowText ("Ironicamente nossos funcionários pra essa fase já estão mortos, mas é só você… Pegar o “espírito” da coisa hehehehe. \n" +
 			"Vai ahn… Até ali pra eu começar a te avaliar.\n" +
-			"(Imagem Manete) para andar pra frente", 0.1f);
+				"(     esquerdo: para andar pra frente)", 0.1f);
+			if (count > 27.5f) {
+				joystick.enabled = true;
+				ChangeSprite (meio, frente);
+			}
 		}
 //		if (count > 16 && count < 18) {
 //			apagaTexto = true;
@@ -136,7 +149,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 //				"hehehe.");
 //		}
 
-		if (count > 29) {
+		if (count > 32) {
 //			apagaTexto = true;
 //			finishedText = false;
 			quest1 = true;
@@ -154,9 +167,11 @@ public class Lv1_Tutorial : MonoBehaviour {
 //				"(Mova Joystick esquerdo pra cima \n" +
 //				"pra andar pra frente)");
 			//player.GetComponent<PlayerMovement> ().enabled = true;
+			ChangeSprite (meio, frente);
 
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) > 0 /*&& finishedText == true*/) {
 				up = true;
+				count = 0;
 				Reset ();
 			}
 		}
@@ -164,33 +179,60 @@ public class Lv1_Tutorial : MonoBehaviour {
 
 
 		if (up) {
+			count += Time.deltaTime;
 			PlayAudio (vampeta [1]);
 			ShowText ("Nãnãnãnão!! Por aí não, você vai sujar todo o salão.\n" +
-				"(Mova Joystick esquerdo pra esquerda para andar para a esquerda)", 0.07f);
+				"(     esquerdo: para andar para a esquerda)", 0.07f);
+			if (count < 3) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-585, -380, 0);
+				ChangeSprite (meio, esquerdo);
+			}
 
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) < 0 && finishedText == true) {
 				up = false;
 				left = true;
 				Reset ();
+				count = 0;
 			}
 		}
 
 		if (left) {
+			count += Time.deltaTime;
 			PlayAudio (vampeta [2]);
 			ShowText ("Ehrm… Se importa em dar a volta pela direita, eu… Sou supersticioso heheh… \n" +
-				"(Mova o Joystick esquerdo pra direita para andar para a direita)", 0.1f);
+				"(     esquerdo: para andar para a direita)", 0.1f);
+			if (count < 3.5f) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-585, -380, 0);
+				ChangeSprite (meio, direito);
+			}
+
 
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) > 0 && finishedText == true) {
 				left = false;
 				right = true;
 				Reset ();
+				count = 0;
 			}
 		}
 
 		if (right) {
+			count += Time.deltaTime;
 			PlayAudio (vampeta [3]);
 			ShowText ("Tá, certo. Agora vira pra cá pra eu registrar sua cara no sistema.\n" +
-				"(Mova Joystick esquerdo pra baixo para andar para trás)", 0.1f);
+				"(     esquerdo: para andar para trás)", 0.1f);
+			if (count < 3.5f) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-585, -380, 0);
+				ChangeSprite (meio, tras);
+			}
 
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) < 0 && finishedText == true) {
 				right = false;
@@ -202,6 +244,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 		if (down) {
 			count += Time.deltaTime;
 			if (count < 2) {
+				joystick.enabled = false;
 				PlayAudio (vampeta [4]);
 				ShowText ("Perfeito", 0.1f);
 			}
@@ -239,15 +282,31 @@ public class Lv1_Tutorial : MonoBehaviour {
 		if (!basicSkill && !bulletSkill && !jumpSkill && !specialSkill) {
 			PlayAudio (vampeta [6]);
 			ShowText ("Ok, aqui você tem… Experiência em decaptação com foice, é isso?\n" +
-				"(Aperte ?? para atacar com a foice)", 0.1f);
+				"(     direito: para atacar com a foice)", 0.1f);
+			if (count < 3) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-585, -380, 0);
+				ChangeSprite (meio, direito);
+			}
 
 			if (InputArcade.Eixo (1, EEixo.HORIZONTAL) > 0 && finishedText == true && isGrounded) {
 				basicSkill = true;
 				Reset ();
+				count = 0;
 			}
 		}
 
 		if (basicSkill) {
+			if (count < 5.5f) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-585, -380, 0);
+				ChangeSprite (meio, esquerdo);
+			}
+
 			if (count < 2) {
 				PlayAudio (vampeta [7]);
 				ShowText ("… Muito original.", 0.1f); //corrigir, nao saiu audio (talvez muito rapido);
@@ -257,8 +316,9 @@ public class Lv1_Tutorial : MonoBehaviour {
 			}
 			if (count > 4) {
 				PlayAudio (vampeta [8]);
-				ShowText ("Facilidade com magia negra? \n" +
-					"(Aperte ?? para jogar uma esfera de energia)", 0.06f);
+				ShowText ("Facilidade com magia negra? \n\n" +
+					"(     direito: para jogar uma esfera de energia)", 0.06f);
+
 
 				if (InputArcade.Eixo (1, EEixo.HORIZONTAL) < 0 && finishedText == true && isGrounded) {
 					basicSkill = false;
@@ -270,6 +330,14 @@ public class Lv1_Tutorial : MonoBehaviour {
 		}
 
 		if (bulletSkill) {
+			if (count < 7) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-585, -380, 0);
+				ChangeSprite (meio, frente);
+			}
+
 			if (count < 2) {
 				PlayAudio (vampeta [9]);
 				ShowText ("Uuh…  Impressionante…", 0.1f);
@@ -280,9 +348,9 @@ public class Lv1_Tutorial : MonoBehaviour {
 			if (count > 4) {
 				PlayAudio (vampeta [10]);
 				ShowText ("Pu...Pulo? Hãã, quem coloca no currículo que sabe pular?!\n" +
-					"(Aperte ?? pra pular.)", 0.1f);
+					"(     direito: pra pular.)", 0.1f);
 
-				if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0 && finishedText == true /*&& isGrounded*/) {
+				if (InputArcade.Eixo (1, EEixo.VERTICAL) > 0 && finishedText == true) {
 					bulletSkill = false;
 					jumpSkill = true;
 					Reset ();
@@ -292,13 +360,20 @@ public class Lv1_Tutorial : MonoBehaviour {
 		}
 
 		if (jumpSkill) {
-			if (count < 2) {
+			if (count < 8) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-585, -450, 0);
+				ChangeSprite (meio, tras);
+			}
+			if (count < 1) {
 				Reset ();
 			}
-			if (count > 2) {
+			if (count > 1) {
 				PlayAudio (vampeta [14]);
 				ShowText ("“Conjuração de auto entidade profana ascendente do plano“...? Isso é um tipo formal de falar “Tipo um lance do mal que sai do chão”?\n" +
-					"(Aperte -- para criar a barreira.)"
+					"(     direito: para criar a barreira.)"
 					, 0.1f);
 
 				if (InputArcade.Eixo (1, EEixo.VERTICAL) < 0 && finishedText == true && isGrounded) {
@@ -315,9 +390,16 @@ public class Lv1_Tutorial : MonoBehaviour {
 	private void Quest3(){
 		count += Time.deltaTime;
 		if (!airborneSkill && !slowedTimeSkill) {
+			if (count < 1f) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-585, -380, 0);
+				ChangeSprite (meio, frente);
+			}
 			PlayAudio (vampeta [11]);
-			ShowText ("Vôo intermediário?\n" +
-				"(Aperte ?? durante o pulo para planar. Você ganha habilidades diferentes enquanto está no ar.)", 0.06f);
+			ShowText ("Vôo intermediário?\n\n" +
+				"(     direito: durante o pulo para planar. Você ganha habilidades diferentes enquanto está no ar.)", 0.06f);
 
 			if (airborne) {
 				airborneSkill = true;
@@ -326,17 +408,25 @@ public class Lv1_Tutorial : MonoBehaviour {
 			}
 		}
 		if (airborneSkill) {
-			if (count < 2) {
+			if (count < 7.5f) {
+				joystick.enabled = false;
+			} else {
+				joystick.enabled = true;
+				joystick.transform.localPosition = new Vector3 (-575, -320, 0);
+				joystick.rectTransform.localScale = new Vector2 (0.4f, 0.4f);
+				ChangeSprite (botaoAzul, botaoAzul);
+			}
+			if (count < 6) {
 				PlayAudio (vampeta [12]);
 				ShowText ("… Mais pra planar do que de fato voar… Todo mundo aumenta os pontos no currículo, de qualquer jeito… ", 0.1f);
 			}
-			if (count > 2 && count < 4) {
+			if (count > 6 && count < 6.5f) {
 				Reset ();
 			}
-			if (count > 4) {
+			if (count > 6.5f) {
 				//PlayAudio (vampeta [12]);
 				ShowText ("Congelar o tempo…? \n" +
-					"(Aperte ?? para desacelerar o tempo)", 0.1f);
+					"(     para desacelerar o tempo)", 0.1f);
 
 				if (slowedTime) {
 					airborneSkill = false;
@@ -347,17 +437,27 @@ public class Lv1_Tutorial : MonoBehaviour {
 			}
 		}
 		if (slowedTimeSkill) {
-			PlayAudio (vampeta [13]);
-			ShowText ("Eu devia ter percebido alguma coisa? Quer dizer, o tempo congelou pra você, não pra mim. ", 0.1f);
-			if (count > 10) {
+			joystick.enabled = false;
+			if (count < 9) {
+				PlayAudio (vampeta [13]);
+				ShowText ("Eu devia ter percebido alguma coisa? Quer dizer, o tempo congelou pra você, não pra mim. ", 0.1f);
+			}
+			if (count > 9 && count < 10) {
+				Reset ();
+			}
+			if (count > 10 && count < 13 ) {
 				PlayAudio (vampeta [15]);
-				ShowText ("Teletransporte.", 0.1f);
+				ShowText ("Teletransporte.\n" +
+					"(Aperte 2x rapidamente para um mesmo lado)", 0.1f);
 			}
-			if (count > 15) {
+			if (count > 13 && count < 14) {
+				Reset ();
+			}
+			if (count > 18) {
 				PlayAudio (vampeta [16]);
-				ShowText ("Parece que alguém não vai ter desculpa pra chegar atrasado.", 0.1f);
+				ShowText ("Parece que alguém não vai ter desculpa pra chegar atrasado. \nVamos para próxima etapa", 0.1f);
 			}
-			if (count > 10) {
+			if (count > 25) {
 //				PlayerPrefs.SetInt ("2DIopen", 1);
 //				PlayerPrefs.Save ();
 				SceneManager.LoadScene ("2DI");
@@ -415,6 +515,20 @@ public class Lv1_Tutorial : MonoBehaviour {
 		apagaTexto = true;
 		finishedText = false;
 		playAudioOnce = false;
+	}
+
+	private void ChangeSprite (Sprite um, Sprite dois){
+		countImg += Time.deltaTime;
+
+		if (countImg < 0.5f) {
+			joystick.sprite = um;
+		}
+		if (countImg > 0.5f && countImg < 1) {
+			joystick.sprite = dois;
+		}
+		if (countImg > 1){
+			countImg = 0;
+		}
 	}
 }
 
