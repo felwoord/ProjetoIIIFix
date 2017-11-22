@@ -131,8 +131,9 @@ public class Lv2_DinamicaIndividual : MonoBehaviour {
 			ShowText ("Ergh, a empresa precisava mesmo cortar gastos. \nFoice. \nCortar. \nHeheheheheh. \nPRÓXIMA ETAPA.", 0.08f);
 			count2 += Time.deltaTime;
 			if (count2 > 10) {
-				PlayerPrefs.SetInt ("3TPopen", 1);
-				PlayerPrefs.Save ();
+//				PlayerPrefs.SetInt ("3TPopen", 1);
+//				PlayerPrefs.Save ();
+				GameObject.Find("DataBase").GetComponent<conexaobd>().OpenLevel(3);
 				SceneManager.LoadScene ("3TP");
 			}
 		}

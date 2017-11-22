@@ -60,6 +60,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	private GameObject backWall, frontWall, leftWall, rightWall, cam;
 
+	private AudioSource audioEffect;
+	public AudioClip blade;
+	public AudioClip shot;
+
+
 
 	void Start () {
 		
@@ -85,6 +90,9 @@ public class PlayerMovement : MonoBehaviour {
 		leftWall = GameObject.Find ("LeftWall");
 		rightWall = GameObject.Find ("RightWall");
 		cam = GameObject.Find ("Main Camera");
+
+		audioEffect = GetComponent<AudioSource> ();
+
 
 	}
 
@@ -332,6 +340,9 @@ public class PlayerMovement : MonoBehaviour {
 			airborne = false;
 		}
 
+		audioEffect.clip = blade;
+		audioEffect.Play ();
+
 	}
 
 	private void ShotAttack(){
@@ -349,6 +360,9 @@ public class PlayerMovement : MonoBehaviour {
 			airborne = false;
 		} else if (!isGrounded && !airborne) {
 		}
+
+		audioEffect.clip = shot;
+		audioEffect.Play ();
 	}
 
 	private void SpecialAttack(){

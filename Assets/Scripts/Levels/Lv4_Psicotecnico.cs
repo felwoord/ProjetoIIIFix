@@ -69,8 +69,10 @@ public class Lv4_Psicotecnico : MonoBehaviour {
 				ShowText ("Aaaaaargh. Ok, vamos fazer uma seletiva final pra decidir logo com quem vamos ficar, antes que você mate o departamento inteiro.", 0.06f);
 				count2 += Time.deltaTime;
 				if (count2 > 9) {
-					PlayerPrefs.SetInt ("5SFopen", 1);
-					PlayerPrefs.Save ();
+//					PlayerPrefs.SetInt ("5SFopen", 1);
+//					PlayerPrefs.Save ();
+
+					GameObject.Find("DataBase").GetComponent<conexaobd>().OpenLevel(5);
 					SceneManager.LoadScene ("5SF");
 				}
 			}

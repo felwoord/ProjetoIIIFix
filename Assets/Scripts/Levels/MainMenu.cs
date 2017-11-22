@@ -43,6 +43,8 @@ public class MainMenu : MonoBehaviour {
 
 	private float count = 0;
 
+	private GameObject db;
+
 	// Use this for initialization
 	void Start () {
 		mainCanvas = GameObject.Find ("MainCanvas");
@@ -78,6 +80,9 @@ public class MainMenu : MonoBehaviour {
 
 		dIButton.interactable = true;
 
+		db = GameObject.Find ("DataBase");
+
+		db.GetComponent<conexaobd> ().Startt();
 		CheckLevelOpen ();
 
 		target = mainCanvas;
@@ -103,8 +108,7 @@ public class MainMenu : MonoBehaviour {
 			}
 		} else {
 		}
-
-
+			
 
 		//transform.position = new Vector3 (target.transform.position.x, target.transform.position.y, transform.position.z);
 		transform.position = new Vector3 (Mathf.Lerp(transform.position.x, target.transform.position.x, 0.25f),Mathf.Lerp(transform.position.y, target.transform.position.y, 0.5f), transform.position.z);
@@ -113,29 +117,25 @@ public class MainMenu : MonoBehaviour {
 
 	public void CheckLevelOpen(){
 
-//		int dIopen = PlayerPrefs.GetInt ("2DIopen");
-//		if (dIopen == 1) {
-//			dIButton.interactable = true;
-//		} else {
-//			dIButton.interactable = false;
-//		}
-
-		int tPopen = PlayerPrefs.GetInt ("3TPopen");
-		if (tPopen == 1) {
+		//int tPopen = PlayerPrefs.GetInt ("3TPopen");
+		bool tPopen = db.GetComponent<conexaobd> ().CheckAvailable(3);
+		if (tPopen) {
 			tPButton.interactable = true;
 		} else {
 			tPButton.interactable = false;
 		}
 
-		int pTopen = PlayerPrefs.GetInt ("4PTopen");
-		if (pTopen == 1) {
+		//int pTopen = PlayerPrefs.GetInt ("4PTopen");
+		bool pTopen = db.GetComponent<conexaobd> ().CheckAvailable(4);
+		if (pTopen) {
 			pTButton.interactable = true;
 		} else {
 			pTButton.interactable = false;
 		}
 
-		int sFopen = PlayerPrefs.GetInt ("5SFopen");
-		if (sFopen == 1) {
+		//int sFopen = PlayerPrefs.GetInt ("5SFopen");
+		bool sFopen = db.GetComponent<conexaobd> ().CheckAvailable(5);
+		if (sFopen) {
 			sFButton.interactable = true;
 		} else {
 			sFButton.interactable = false;
@@ -164,10 +164,12 @@ public class MainMenu : MonoBehaviour {
 
 	public void DeleteAllSave(){
 //		PlayerPrefs.SetInt("2DIopen",1);
-		PlayerPrefs.SetInt ("3TPopen", 0);
-		PlayerPrefs.SetInt ("4PTopen", 0);
-		PlayerPrefs.SetInt ("5SFopen", 0);
-		PlayerPrefs.Save ();
+//		PlayerPrefs.SetInt ("3TPopen", 0);
+//		PlayerPrefs.SetInt ("4PTopen", 0);
+//		PlayerPrefs.SetInt ("5SFopen", 0);
+//		PlayerPrefs.Save ();
+
+		db.GetComponent<conexaobd> ().DeleteSave ();
 		dIButton.interactable = true;
 		tPButton.interactable = false;
 		pTButton.interactable = false;
