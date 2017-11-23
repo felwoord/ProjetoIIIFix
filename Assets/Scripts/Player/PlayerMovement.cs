@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour {
 			}
 		}
 		if (airborne) {
-			energyBar.fillAmount -= Time.deltaTime / 5;
+			energyBar.fillAmount -= Time.deltaTime / 10;
 		}
 		if (energyBar.fillAmount <= 0.001f) {
 			airborne = false;
