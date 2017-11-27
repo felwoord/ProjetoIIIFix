@@ -120,7 +120,7 @@ public class Lv1_Tutorial : MonoBehaviour {
 			ShowText ("Ironicamente nossos funcionários pra essa fase já estão mortos, mas é só você… Pegar o “espírito” da coisa hehehehe. \n" +
 			"Vai ahn… Até ali pra eu começar a te avaliar.\n" +
 				"(     esquerdo: para andar pra frente)", 0.1f);
-			if (count > 27.5f) {
+			if (count > 30f) {
 				joystick.enabled = true;
 				ChangeSprite (meio, frente);
 			}

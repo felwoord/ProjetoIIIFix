@@ -64,6 +64,8 @@ public class PlayerMovement : MonoBehaviour {
 	public AudioClip blade;
 	public AudioClip shot;
 
+	private Image basicIcon, jumpIcon, wallIcon, bulletIcon;
+
 
 
 	void Start () {
@@ -93,6 +95,10 @@ public class PlayerMovement : MonoBehaviour {
 
 		audioEffect = GetComponent<AudioSource> ();
 
+		basicIcon = GameObject.Find ("BasicAttackIcon").GetComponent<Image> ();
+		jumpIcon = GameObject.Find ("JumpIcon").GetComponent<Image> ();
+		wallIcon = GameObject.Find ("WallIcon").GetComponent<Image> ();
+		bulletIcon = GameObject.Find ("BulletIcon").GetComponent<Image> ();
 
 	}
 
@@ -325,7 +331,11 @@ public class PlayerMovement : MonoBehaviour {
 				airborne = false;
 			}
 		}
+
+		jumpIcon.enabled = false;
+		Invoke ("IconJump", 0.1f);
 	}
+
 
 	private void BasicAttack(){
 		if (isGrounded) {
@@ -342,6 +352,9 @@ public class PlayerMovement : MonoBehaviour {
 
 		audioEffect.clip = blade;
 		audioEffect.Play ();
+
+		basicIcon.enabled = false;
+		Invoke ("IconBasic", 0.1f);
 
 	}
 
@@ -363,6 +376,9 @@ public class PlayerMovement : MonoBehaviour {
 
 		audioEffect.clip = shot;
 		audioEffect.Play ();
+
+		bulletIcon.enabled = false;
+		Invoke ("IconBullet", 0.1f);
 	}
 
 	private void SpecialAttack(){
@@ -393,6 +409,22 @@ public class PlayerMovement : MonoBehaviour {
 			airborne = false;
 		} else if (!isGrounded && !airborne) {
 		}
+
+		wallIcon.enabled = false;
+		Invoke ("IconWall", 0.1f);
+	}
+
+	private void IconBasic (){
+		basicIcon.enabled = true;
+	}
+	private void IconBullet (){
+		bulletIcon.enabled = true;
+	}
+	private void IconJump (){
+		jumpIcon.enabled = true;
+	}
+	private void IconWall (){
+		wallIcon.enabled = true;
 	}
 
 	void OnCollisionEnter (Collision collision)

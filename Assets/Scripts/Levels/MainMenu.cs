@@ -129,7 +129,7 @@ public class MainMenu : MonoBehaviour {
 			imgB.SetActive (false);
 			imgL.SetActive (false);
 			gameTitle.SetActive (false);
-			if (count > 10) {
+			if (count > 5f) {
 				SceneManager.LoadScene ("1Tutorial");
 			}
 		} else {

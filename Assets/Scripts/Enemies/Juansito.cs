@@ -56,14 +56,18 @@ public class Juansito : MonoBehaviour {
 			}
 			count = 0;
 		}
-		if (movement) {
-			rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
-			Mov ();
+		if (!slowedTime) {
+			if (movement) {
+				rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+				Mov ();
+			} else {
+				rb.velocity = Vector3.zero;
+				rb.constraints = RigidbodyConstraints.FreezeAll;
+			}
 		} else {
 			rb.velocity = Vector3.zero;
 			rb.constraints = RigidbodyConstraints.FreezeAll;
 		}
-
 		AntiBugWall ();
 	}
 
@@ -77,23 +81,14 @@ public class Juansito : MonoBehaviour {
 
 
 
-		
-		if (slowedTime) {
-			//rb.velocity = diffVectorNormalized * movST * Time.deltaTime;
-
-		} else {
-			rb.velocity = diffVectorNormalized * mov * Time.deltaTime;
-			if (movDirection != Vector3.zero) {
-				transform.rotation = Quaternion.LookRotation (movDirection);
-			}
+		rb.velocity = diffVectorNormalized * mov * Time.deltaTime;
+		if (movDirection != Vector3.zero) {
+			transform.rotation = Quaternion.LookRotation (movDirection);
 		}
+		
+	}
 
 		
-
-
-
-
-	}
 		
 	public void Hit(){
 		Vector3 differenceVector = new Vector3 (transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y, transform.position.z - player.transform.position.z);

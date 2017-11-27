@@ -83,11 +83,11 @@ public class Lv5_SeletivaFinal : MonoBehaviour {
 				}
 			}
 		} else {
-			if (count > 10) {
+			if (count > 8) {
 				PlayAudio (vampeta [2]);
 				ShowText ("Tava esperando o que? Cena de créditos e agradecimentos? Não, seu inferno vai começar agora!", 0.08f);
 			}
-			if (count > 20) {
+			if (count > 18) {
 				SceneManager.LoadScene ("Menu");
 			}
 		}
