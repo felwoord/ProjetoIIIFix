@@ -87,7 +87,7 @@ public class MainMenu : MonoBehaviour {
 
 		db = GameObject.Find ("DataBase");
 
-		db.GetComponent<conexaobd> ().Startt();
+		//db.GetComponent<conexaobd> ().Startt();
 		CheckLevelOpen ();
 
 		target = mainCanvas;
@@ -151,25 +151,25 @@ public class MainMenu : MonoBehaviour {
 
 	public void CheckLevelOpen(){
 
-		//int tPopen = PlayerPrefs.GetInt ("3TPopen");
-		bool tPopen = db.GetComponent<conexaobd> ().CheckAvailable(3);
-		if (tPopen) {
+		int tPopen = PlayerPrefs.GetInt ("3TPopen");
+		//bool tPopen = db.GetComponent<conexaobd> ().CheckAvailable(3);
+		if (tPopen == 1) {
 			tPButton.interactable = true;
 		} else {
 			tPButton.interactable = false;
 		}
 
-		//int pTopen = PlayerPrefs.GetInt ("4PTopen");
-		bool pTopen = db.GetComponent<conexaobd> ().CheckAvailable(4);
-		if (pTopen) {
+		int pTopen = PlayerPrefs.GetInt ("4PTopen");
+		//bool pTopen = db.GetComponent<conexaobd> ().CheckAvailable(4);
+		if (pTopen == 1) {
 			pTButton.interactable = true;
 		} else {
 			pTButton.interactable = false;
 		}
 
-		//int sFopen = PlayerPrefs.GetInt ("5SFopen");
-		bool sFopen = db.GetComponent<conexaobd> ().CheckAvailable(5);
-		if (sFopen) {
+		int sFopen = PlayerPrefs.GetInt ("5SFopen");
+		//bool sFopen = db.GetComponent<conexaobd> ().CheckAvailable(5);
+		if (sFopen == 1) {
 			sFButton.interactable = true;
 		} else {
 			sFButton.interactable = false;

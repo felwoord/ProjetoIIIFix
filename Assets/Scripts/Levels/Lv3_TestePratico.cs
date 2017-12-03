@@ -68,10 +68,10 @@ public class Lv3_TestePratico : MonoBehaviour {
 				ShowText ("Ah? Você ainda tá vivo?... Aaah… Próxima fase.",0.06f);
 				count2 += Time.deltaTime;
 				if (count2 > 5) {
-//					PlayerPrefs.SetInt ("4PTopen", 1);
-//					PlayerPrefs.Save ();
+					PlayerPrefs.SetInt ("4PTopen", 1);
+					PlayerPrefs.Save ();
 
-					GameObject.Find("DataBase").GetComponent<conexaobd>().OpenLevel(4);
+					//GameObject.Find("DataBase").GetComponent<conexaobd>().OpenLevel(4);
 					SceneManager.LoadScene ("4PT");
 				}
 			}
