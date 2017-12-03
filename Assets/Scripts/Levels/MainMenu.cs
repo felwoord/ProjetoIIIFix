@@ -48,6 +48,7 @@ public class MainMenu : MonoBehaviour {
 	GameObject imgB;
 	GameObject imgL;
 	GameObject gameTitle;
+	GameObject imgL1;
 
 	// Use this for initialization
 	void Start () {
@@ -93,6 +94,7 @@ public class MainMenu : MonoBehaviour {
 
 		imgB = GameObject.Find ("ImageBackLever");
 		imgL = GameObject.Find ("Lever");
+		imgL1 = GameObject.Find ("Lever1");
 		gameTitle = GameObject.Find ("GameTitle");
 	}
 	
@@ -102,32 +104,38 @@ public class MainMenu : MonoBehaviour {
 			target = mainCanvas;
 			imgB.SetActive (true);
 			imgL.SetActive (true);
+			imgL1.SetActive (true);
 			gameTitle.SetActive (true);
 		} else if (EventSystem.current.currentSelectedGameObject.tag == "LevelButtons") {
 			target = levelCanvas;
 			imgB.SetActive (true);
 			imgL.SetActive (true);
+			imgL1.SetActive (true);
 			gameTitle.SetActive (true);
 		} else if (EventSystem.current.currentSelectedGameObject.tag == "OptionButtons") {
 			target = optionCanvas;
 			imgB.SetActive (true);
 			imgL.SetActive (true);
+			imgL1.SetActive (true);
 			gameTitle.SetActive (true);
 		} else if (EventSystem.current.currentSelectedGameObject.tag == "ResetButtons") {
 			target = resetCanvas;
 			imgB.SetActive (true);
 			imgL.SetActive (true);
+			imgL1.SetActive (true);
 			gameTitle.SetActive (true);
 		} else if (EventSystem.current.currentSelectedGameObject.tag == "InfosButtons") {
 			target = infosCanvas;
 			imgB.SetActive (false);
 			imgL.SetActive (false);
+			imgL1.SetActive (false);
 			gameTitle.SetActive (false);
 		} else if (EventSystem.current.currentSelectedGameObject.tag == "StartTutorialButton") {
 			target = startTutorialCanvas;
 			count += Time.deltaTime;
 			imgB.SetActive (false);
 			imgL.SetActive (false);
+			imgL1.SetActive (false);
 			gameTitle.SetActive (false);
 			if (count > 5f) {
 				SceneManager.LoadScene ("1Tutorial");

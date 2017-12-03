@@ -25,10 +25,10 @@ public class JoystickMenu1 : MonoBehaviour {
 			img.sprite = joystick [1];
 		}
 		if (count > 1 && count < 1.5f ){
-			img.sprite = joystick [2];
+			img.sprite = joystick [0];
 		}
 		if (count > 1.5f) {
-			img.sprite = joystick [1];
+			img.sprite = joystick [2];
 		}
 		if (count > 2) {
 			count = 0;
