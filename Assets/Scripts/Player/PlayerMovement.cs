@@ -66,10 +66,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	private Image basicIcon, jumpIcon, wallIcon, bulletIcon;
 
-
+	private MeshCollider mC;
 
 	void Start () {
-		
+		mC = GetComponent<MeshCollider> ();
+
 		rb = GetComponent<Rigidbody> ();
 
 		range = 1;
@@ -178,7 +179,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (dash.fillAmount >= 1) {
 			// ||||||||||||||||||||||||||||||||||||||||| Dash Foward |||||||||||||||||||||||||||||||||||||||||
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) > 0 && firstButtonPressedF && firstButtonReleasedF) {
-				if (Time.time - timeOfFirstButtonF < 0.5f) {
+				if (Time.time - timeOfFirstButtonF < 0.35f) {
 					transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.z + 20);
 					dash.fillAmount = 0;
 				}
@@ -188,6 +189,13 @@ public class PlayerMovement : MonoBehaviour {
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) > 0 && !firstButtonPressedF) {
 				firstButtonPressedF = true;
 				timeOfFirstButtonF = Time.time;
+				firstButtonPressedB = false;
+				firstButtonReleasedB = false;
+				firstButtonPressedL = false;
+				firstButtonReleasedL = false;
+				firstButtonPressedR = false;
+				firstButtonReleasedR = false;
+
 			}
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) == 0 && firstButtonPressedF) {
 				firstButtonReleasedF = true;
@@ -201,7 +209,7 @@ public class PlayerMovement : MonoBehaviour {
 
 			// ||||||||||||||||||||||||||||||||||||||||| Dash Backward |||||||||||||||||||||||||||||||||||||||||
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) < 0 && firstButtonPressedB && firstButtonReleasedB) {
-				if (Time.time - timeOfFirstButtonB < 0.5f) {
+				if (Time.time - timeOfFirstButtonB < 0.35f) {
 					transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.z - 20);
 					dash.fillAmount = 0;
 				}
@@ -211,6 +219,12 @@ public class PlayerMovement : MonoBehaviour {
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) < 0 && !firstButtonPressedB) {
 				firstButtonPressedB = true;
 				timeOfFirstButtonB = Time.time;
+				firstButtonPressedF = false;
+				firstButtonReleasedF = false;
+				firstButtonPressedL = false;
+				firstButtonReleasedL = false;
+				firstButtonPressedR = false;
+				firstButtonReleasedR = false;
 			}
 			if (InputArcade.Eixo (0, EEixo.VERTICAL) == 0 && firstButtonPressedB) {
 				firstButtonReleasedB = true;
@@ -224,7 +238,7 @@ public class PlayerMovement : MonoBehaviour {
 
 			// ||||||||||||||||||||||||||||||||||||||||| Dash Right |||||||||||||||||||||||||||||||||||||||||
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) > 0 && firstButtonPressedR && firstButtonReleasedR) {
-				if (Time.time - timeOfFirstButtonR < 0.5f) {
+				if (Time.time - timeOfFirstButtonR < 0.35f) {
 					transform.position = new Vector3 (transform.position.x + 20, transform.position.y, transform.position.z);
 					dash.fillAmount = 0;
 				}
@@ -234,6 +248,12 @@ public class PlayerMovement : MonoBehaviour {
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) > 0 && !firstButtonPressedR) {
 				firstButtonPressedR = true;
 				timeOfFirstButtonR = Time.time;
+				firstButtonPressedB = false;
+				firstButtonReleasedB = false;
+				firstButtonPressedL = false;
+				firstButtonReleasedL = false;
+				firstButtonPressedF = false;
+				firstButtonReleasedF = false;
 			}
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) == 0 && firstButtonPressedR) {
 				firstButtonReleasedR = true;
@@ -248,7 +268,7 @@ public class PlayerMovement : MonoBehaviour {
 
 			// ||||||||||||||||||||||||||||||||||||||||| Dash Left |||||||||||||||||||||||||||||||||||||||||
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) < 0 && firstButtonPressedL && firstButtonReleasedL) {
-				if (Time.time - timeOfFirstButtonL < 0.5f) {
+				if (Time.time - timeOfFirstButtonL < 0.35f) {
 					transform.position = new Vector3 (transform.position.x - 20, transform.position.y, transform.position.z);
 					dash.fillAmount = 0;
 				}
@@ -258,6 +278,12 @@ public class PlayerMovement : MonoBehaviour {
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) < 0 && !firstButtonPressedL) {
 				firstButtonPressedL = true;
 				timeOfFirstButtonL = Time.time;
+				firstButtonPressedB = false;
+				firstButtonReleasedB = false;
+				firstButtonPressedF = false;
+				firstButtonReleasedF = false;
+				firstButtonPressedR = false;
+				firstButtonReleasedR = false;;
 			}
 
 			if (InputArcade.Eixo (0, EEixo.HORIZONTAL) == 0 && firstButtonPressedL) {
@@ -339,13 +365,20 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void BasicAttack(){
 		if (isGrounded) {
-			GameObject basicAttack = Instantiate (Resources.Load ("BasicAttack")) as GameObject;
-			basicAttack.transform.position = new Vector3 (transform.position.x + playerDirection.x * 5.0f, 3.5f, transform.position.z + playerDirection.z * 5.0f);
-			basicAttack.transform.Rotate (playerDirection);
+//			GameObject basicAttack = Instantiate (Resources.Load ("BasicAttack")) as GameObject;
+//			basicAttack.transform.position = new Vector3 (transform.position.x + playerDirection.x * 5.0f, 3.5f, transform.position.z + playerDirection.z * 5.0f);
+//			basicAttack.transform.Rotate (playerDirection);
+			GameObject attackAni = Instantiate (Resources.Load ("spine attack")) as GameObject;
+			attackAni.transform.position = new Vector3 (transform.position.x + playerDirection.x * 1.0f, 2.5f, transform.position.z);
+			attackAni.transform.rotation = Quaternion.LookRotation (playerDirection);
+			attackAni.transform.parent = gameObject.transform;
 		} else {
-			GameObject basicAttack = Instantiate (Resources.Load ("BasicAttack")) as GameObject;
-			basicAttack.transform.position = new Vector3 (transform.position.x + playerDirection.x * 2.0f, 0, transform.position.z + playerDirection.z * 2.0f);
-			basicAttack.transform.Rotate (playerDirection);
+//			GameObject basicAttack = Instantiate (Resources.Load ("BasicAttack")) as GameObject;
+//			basicAttack.transform.position = new Vector3 (transform.position.x + playerDirection.x * 2.0f, 0, transform.position.z + playerDirection.z * 2.0f);
+//			basicAttack.transform.Rotate (playerDirection);
+			GameObject attackAni = Instantiate (Resources.Load ("spine attack")) as GameObject;
+			attackAni.transform.position = new Vector3 (transform.position.x, 2.5f, transform.position.z);
+			attackAni.transform.rotation = Quaternion.LookRotation (playerDirection);
 			rb.constraints = ~RigidbodyConstraints.FreezePosition;
 			airborne = false;
 		}
@@ -438,11 +471,14 @@ public class PlayerMovement : MonoBehaviour {
 			Vector3 diffVectorNormalized = differenceVector.normalized;
 			transform.position = new Vector3 (transform.position.x - diffVectorNormalized.x * 15, 7.7f, transform.position.z - diffVectorNormalized.z * 15);
 
-			rend.material = red;
+			mC.enabled = false;
+			rb.useGravity = false;
+			//rend.material = red;
 
+			StartCoroutine(DoBlinks(0.35f, 0.2f));
 
-			Invoke ("ChangeToBlack", 0.08f);
-
+			//Invoke ("ChangeToBlack", 0.08f);
+			Invoke ("ActiveMeshCollider", 3);
 			if(SceneManager.GetActiveScene ().name != "1Tutorial"){
 				if (healthBar.fillAmount <= 0) {
 					SceneManager.LoadScene ("Menu");
@@ -451,6 +487,26 @@ public class PlayerMovement : MonoBehaviour {
 
 		}
 
+	}
+	private void ActiveMeshCollider(){
+		mC.enabled = true;
+		rb.useGravity = true;
+	}
+
+	IEnumerator DoBlinks(float duration, float blinkTime) {
+		while (duration > 0f) {
+			duration -= Time.deltaTime;
+
+			//toggle renderer
+			rend.enabled = !rend.enabled;
+
+			//wait for a bit
+			//Debug.Log(duration);
+			yield return new WaitForSeconds(blinkTime);
+		}
+
+		//make sure renderer is enabled when we exit
+		rend.enabled = true;
 	}
 
 	private void ChangeToBlack(){

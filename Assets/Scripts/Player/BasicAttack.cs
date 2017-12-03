@@ -42,12 +42,12 @@ public class BasicAttack : MonoBehaviour {
 				col.gameObject.GetComponent<Encostus> ().Hit ();
 			}
 
-			Destroy (gameObject);
+			//Destroy (gameObject);
 		}
 
 		if (col.collider.tag == "Turret") {
 			Destroy (col.gameObject);
-			Destroy (gameObject);
+			//Destroy (gameObject);
 		}
 
 		if (col.collider.tag == "Block") {

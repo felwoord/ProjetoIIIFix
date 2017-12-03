@@ -22,6 +22,8 @@ public class Ghost : MonoBehaviour {
 
 	private GameObject backWall, frontWall, leftWall, rightWall;
 
+	//private Renderer rend;
+
 	// Use this for initialization
 	void Start () {
 		backWall = GameObject.Find ("BackWall");
@@ -39,6 +41,8 @@ public class Ghost : MonoBehaviour {
 
 		halo = (Behaviour)GetComponent ("Halo");
 		halo.enabled = false;
+
+		//rend = GetComponent<Renderer> ();
 
 	}
 
@@ -100,7 +104,6 @@ public class Ghost : MonoBehaviour {
 		ActiveHalo ();
 
 		Invoke ("DeactiveHalo", 0.15f);
-
 
 		this.life--;
 

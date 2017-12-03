@@ -102,6 +102,7 @@ public class Juansito : MonoBehaviour {
 		Invoke ("DeactiveHalo", 0.15f);
 
 
+
 		this.life--;
 
 		if (this.life <= 0)
